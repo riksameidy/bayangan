@@ -124,6 +124,7 @@ public class Apps {
     //Method tambahan di Task
     public void menuDosen(){
         System.out.println("Dosen");
+        System.out.println("Chii");
     }
     //List Menu
     
