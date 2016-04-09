@@ -31,6 +31,7 @@ public class Controller implements ActionListener{
     private  String password="";
     private  String nama;
     private  String nimnip;
+    private  String email; 
     private long nip;
     private long nim;
     
@@ -263,7 +264,7 @@ public class Controller implements ActionListener{
                 
                 }
                else{
-               
+                   //mahasiswa
                }
            
            }
@@ -291,8 +292,16 @@ public class Controller implements ActionListener{
            
            if(source.equals(profile.getBtnEditProfile())){
                view = new EditProfileView();
-               
-               
+               editProfile = new EditProfileView();
+               editProfile.setVisible(true);
+               profile.dispose();
+               editProfile.addListener(this);
+               if(apps.searchMhs(currentUsername)==-1){
+                    editProfile.setJenisUserVal("Dosen");
+               }
+               else{
+                   //mahasiswa
+               }
            }
            else if(source.equals(profile.getBtnBack())){
                view = new DosenUtamaView();
@@ -305,8 +314,71 @@ public class Controller implements ActionListener{
        }
        
        else if(view instanceof EditProfileView){
+           if(source.equals(editProfile.getBtnSubmit())){
+               if(email.equals("")||nama.equals("")||password.equals("")){
+                    editProfile.setNotification("Data tidak boleh kosong");
+                    editProfile.addListener(this);
+               }
+               else{
+                   if(apps.searchMhs(currentUsername)==-1){
+                    apps.EditDosen(currentUsername, password, nama, email);
+                   
+                    view = new ProfileView();
+                    profile = new ProfileView();
+                    profile.setVisible(true);
+                    editProfile.dispose();
+                    
+                    profile.setJenisUserLabel("Dosen");
+                    profile.setNimnipLabel("NIP");
+                    profile.setUsernameL(apps.getDosen(currentUsername).getUsername());
+                    profile.setNamaL(apps.getDosen(currentUsername).getNama());
+                    profile.setNipnimL(Long.toString(apps.getDosen(currentUsername).getNip()));
+                    profile.setEmailL(apps.getDosen(currentUsername).getEmail());
+                    profile.AddListener(this);
+                   
+                   }
+                   else{
+                   //edit Mahasiswa
+                   }
+               }
            
-       
+           }
+           else if(source.equals(editProfile.getBtnBack())){
+               view = new ProfileView();
+               profile = new ProfileView();
+               profile.setVisible(true);
+               editProfile.dispose();
+               profile.AddListener(this);
+               if(apps.searchMhs(currentUsername)==-1){
+                //dosen
+                
+                profile.setJenisUserLabel("Dosen");
+                profile.setNimnipLabel("NIP");
+                profile.setUsernameL(apps.getDosen(currentUsername).getUsername());
+                profile.setNamaL(apps.getDosen(currentUsername).getNama());
+                profile.setNipnimL(Long.toString(apps.getDosen(currentUsername).getNip()));
+                profile.setEmailL(apps.getDosen(currentUsername).getEmail());
+                
+                }
+               else{
+                   //mahasiswa
+               }
+           }
+           
+           else if(source.equals(editProfile.gettFEmail())){
+               email = editProfile.gettFEmail().getText();
+               editProfile.addListener(this);
+           
+           }
+           else if(source.equals(editProfile.gettFNamaEdit())){
+               nama = editProfile.gettFNamaEdit().getText();
+               editProfile.addListener(this);
+           }
+           else if(source.equals(editProfile.gettFPassEdit())){
+               password = editProfile.gettFPassEdit().getText();
+               editProfile.addListener(this);
+           }
+           
        }
        
        else if(view instanceof MahasiswaUtamaView){

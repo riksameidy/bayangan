@@ -166,6 +166,15 @@ public class Apps {
               d.setUsername(username);         
       }
       
+      public void EditDosen(String username,String password, String nama , String email){
+          Dosen d = getDosen(username);
+          d.setEmail(email);
+          d.setNama(nama);
+          d.setPassword(password);
+      
+      }
+      
+      
       
       
       
