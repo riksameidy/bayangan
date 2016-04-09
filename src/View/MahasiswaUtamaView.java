@@ -27,17 +27,17 @@ public class MahasiswaUtamaView extends javax.swing.JFrame implements View {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        MenuMahasiswa = new javax.swing.JLabel();
+        jLabelMenuMahasiswa = new javax.swing.JLabel();
         jButtonProfile = new javax.swing.JButton();
         jButtonLogOut = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListDaftarKelas = new javax.swing.JList<>();
-        DaftarKelas = new javax.swing.JLabel();
+        jLabelDaftarKelas = new javax.swing.JLabel();
         jButtonPilihKelas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        MenuMahasiswa.setText("Menu Mahasiswa");
+        jLabelMenuMahasiswa.setText("Menu Mahasiswa");
 
         jButtonProfile.setText("Profile");
 
@@ -50,7 +50,7 @@ public class MahasiswaUtamaView extends javax.swing.JFrame implements View {
         });
         jScrollPane1.setViewportView(jListDaftarKelas);
 
-        DaftarKelas.setText("Daftar Kelas");
+        jLabelDaftarKelas.setText("Daftar Kelas");
 
         jButtonPilihKelas.setText("Pilih Kelas");
         jButtonPilihKelas.addActionListener(new java.awt.event.ActionListener() {
@@ -82,21 +82,21 @@ public class MahasiswaUtamaView extends javax.swing.JFrame implements View {
                         .addGap(0, 136, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(DaftarKelas)
+                                .addComponent(jLabelDaftarKelas)
                                 .addGap(150, 150, 150))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(MenuMahasiswa)
+                                .addComponent(jLabelMenuMahasiswa)
                                 .addGap(138, 138, 138))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(MenuMahasiswa)
+                .addComponent(jLabelMenuMahasiswa)
                 .addGap(21, 21, 21)
                 .addComponent(jButtonProfile)
                 .addGap(18, 18, 18)
-                .addComponent(DaftarKelas)
+                .addComponent(jLabelDaftarKelas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -119,11 +119,11 @@ public class MahasiswaUtamaView extends javax.swing.JFrame implements View {
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel DaftarKelas;
-    private javax.swing.JLabel MenuMahasiswa;
     private javax.swing.JButton jButtonLogOut;
     private javax.swing.JButton jButtonPilihKelas;
     private javax.swing.JButton jButtonProfile;
+    private javax.swing.JLabel jLabelDaftarKelas;
+    private javax.swing.JLabel jLabelMenuMahasiswa;
     private javax.swing.JList<String> jListDaftarKelas;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
