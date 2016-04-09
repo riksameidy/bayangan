@@ -20,6 +20,7 @@ public class Driver {
         apps.getDosen(1).setPassword("yu");
         System.out.println(apps.getDosen("riksa").getUsername());
         System.out.println(apps.getDosen("riksa").getPassword());
+        
         Controller c = new Controller(apps);
         
     }

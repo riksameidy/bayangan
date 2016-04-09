@@ -25,7 +25,13 @@ public class Dosen extends Orang {
         super.setNama("Default");
         kelas = new Kelas[5];
     }
-    public Dosen(String nama, long nip){
+
+    public Dosen(long nip) {
+        this.nip = nip;
+        kelas = new Kelas[5];
+    }
+    
+    public Dosen(String nama, long nip, int maxKelas){
         this.nip = nip;
         super.setNama(nama);
         kelas = new Kelas[maxKelas];
@@ -75,5 +81,18 @@ public class Dosen extends Orang {
     public void deleteMhsInKelompok(Mahasiswa m, int nKelas,int nKelompok){
         int idx = kelas[nKelas].getKelompok(nKelas).indeksAnggota(m);
         kelas[nKelas].getKelompok(nKelas).deleteAnggota(idx);
+    }
+    public int idxKelas(String name){
+        int idx=-1;
+        for(int i=0;i<jumlahKelas;i++){
+            if(name.equals(kelas[i].getNama())){
+                idx = i;
+            }
+        }
+        return idx;
+    }
+    
+    public int getJumlahKelas(){
+        return this.jumlahKelas;
     }
 }

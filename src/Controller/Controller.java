@@ -25,6 +25,7 @@ public class Controller implements ActionListener{
     private DosenUtamaView dosenUtama;
     private MahasiswaUtamaView mahasiswaUtama;
     private ProfileView profile;
+    private EditProfileView editProfile;
     
     private  String username="";
     private  String password="";
@@ -289,11 +290,22 @@ public class Controller implements ActionListener{
                 
            
            if(source.equals(profile.getBtnEditProfile())){
+               view = new EditProfileView();
+               
                
            }
            else if(source.equals(profile.getBtnBack())){
-               
+               view = new DosenUtamaView();
+               dosenUtama = new DosenUtamaView();
+               dosenUtama.setVisible(true);
+               profile.dispose();
+               dosenUtama.addListener(this);
            }
+       
+       }
+       
+       else if(view instanceof EditProfileView){
+           
        
        }
        

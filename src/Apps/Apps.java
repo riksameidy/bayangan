@@ -24,8 +24,8 @@ public class Apps {
     List<Kelompok> daftarKelompok = new ArrayList<>();
     List<MataKuliah> daftarMK = new ArrayList<>();
     
-    public void createDosen(String nama, long nip){
-        Dosen d = new Dosen(nama,nip);
+    public void createDosen(long nip){
+        Dosen d = new Dosen(nip);
         daftarDosen.add(d);
     } 
     public void  addDosen(Dosen d){
@@ -40,11 +40,23 @@ public class Apps {
         }
         return d;
     }
+    public Dosen getDosen(String username){
+        Dosen d = null;
+        for(Dosen c: daftarDosen){
+            if(c.getUsername().equals(username)){
+                d= c;
+            }
+        }
+        return d;
+    }
     public boolean isDosenAda(long nip){
         return daftarDosen.contains(this.getDosen(nip));
     }
     public int searchDosen(long nip){
         return daftarDosen.indexOf(getDosen(nip));
+    }
+    public int searchDosen(String username){
+        return daftarDosen.indexOf(getDosen(username));
     }
     public void deleteDosen(long nip){
         daftarDosen.remove(getDosen(nip));
@@ -63,11 +75,23 @@ public class Apps {
         }
         return m;
     }
+    public Mahasiswa getMhs(String username){
+        Mahasiswa m= null;
+        for(Mahasiswa c: daftarMahasiswa){
+            if(username.equals(c.getUsername())){
+                m=c;
+            }
+        }
+        return m;
+    }
     public boolean isMhsAda(long nim){
         return daftarMahasiswa.contains(getMhs(nim));
     }
     public int searchMhs(long nim){
         return daftarMahasiswa.indexOf(getMhs(nim));
+    }
+    public int searchMhs(String username){
+        return daftarMahasiswa.indexOf(getMhs(username));
     }
     public void deleteMhs(long nim){
         daftarMahasiswa.remove(getMhs(nim));
@@ -119,16 +143,33 @@ public class Apps {
     public void deleteMK(String kodeMK){
         daftarMK.remove(getMk(kodeMK));
     }
+ 
     
-    
-    //Method tambahan di Task
-    public void menuDosen(){
-        System.out.println("Dosen");
-        System.out.println("Chii");
-    }
-    //List Menu
-    
-    
+    //Fungsionalitas
+        
+      public void SignupMhs(String username , String password, String nama,long nim){
+          
+                createMhs(nim);
+                Mahasiswa m = getMhs(nim);
+                m.setUsername(username);
+                m.setPassword(password);
+                m.setNama(nama);
+                
+      }
+      
+      public void SignupDosen(String username , String password, String nama,long nip){
+                
+              createDosen(nip);
+              Dosen d = getDosen(nip);
+              d.setNama(nama);
+              d.setPassword(password);
+              d.setUsername(username);         
+      }
+      
+      
+      
+      
+      
     //Main Menu
 
     
