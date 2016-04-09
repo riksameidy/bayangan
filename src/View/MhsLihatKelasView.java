@@ -27,89 +27,86 @@ public class MhsLihatKelasView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabelNamaKelas = new javax.swing.JLabel();
+        jLabelMahasiswa = new javax.swing.JLabel();
+        jButtonBack = new javax.swing.JButton();
+        jLabelDosen = new javax.swing.JLabel();
+        jLabelMataKuliah = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jLabelKelompok = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        jButtonEditKelompok = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jLabel9 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
+        jListTugasIndividu = new javax.swing.JList<>();
+        jLabelDaftarTugasIndividu = new javax.swing.JLabel();
+        jButtonPilihTugasIndividu = new javax.swing.JButton();
+        jLabelDaftarTugasKelompok = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
-        jButton5 = new javax.swing.JButton();
-
-        jButton2.setText("jButton2");
+        jListTugasKelompok = new javax.swing.JList<>();
+        jButtonPilihTugasKelompok = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Nama Kelas ");
+        jLabelNamaKelas.setText("Nama Kelas ");
 
-        jLabel2.setText("Mahasiswa");
+        jLabelMahasiswa.setText("Mahasiswa");
 
-        jButton1.setText("Back");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonBack.setText("Back");
+        jButtonBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonBackActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Dosen : ");
+        jLabelDosen.setText("Dosen : ");
 
-        jLabel4.setText("Mata Kuliah :");
+        jLabelMataKuliah.setText("Mata Kuliah :");
 
         jLabel5.setText("jLabel5");
 
         jLabel6.setText("jLabel6");
 
-        jLabel7.setText("Kelompok :");
+        jLabelKelompok.setText("Kelompok :");
 
         jLabel8.setText("jLabel8");
 
-        jButton3.setText("Edit Kelompok");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        jButtonEditKelompok.setText("Edit Kelompok");
+        jButtonEditKelompok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                jButtonEditKelompokActionPerformed(evt);
             }
         });
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+        jListTugasIndividu.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(jListTugasIndividu);
 
-        jLabel9.setText("Daftar Tugas Individu ");
+        jLabelDaftarTugasIndividu.setText("Daftar Tugas Individu ");
 
-        jButton4.setText("Pilih Tugas");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPilihTugasIndividu.setText("Pilih Tugas");
+        jButtonPilihTugasIndividu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jButtonPilihTugasIndividuActionPerformed(evt);
             }
         });
 
-        jLabel10.setText("Daftar Tugas Kelompok ");
+        jLabelDaftarTugasKelompok.setText("Daftar Tugas Kelompok ");
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
+        jListTugasKelompok.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(jListTugasKelompok);
 
-        jButton5.setText("Pilih Tugas");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPilihTugasKelompok.setText("Pilih Tugas");
+        jButtonPilihTugasKelompok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jButtonPilihTugasKelompokActionPerformed(evt);
             }
         });
 
@@ -123,102 +120,102 @@ public class MhsLihatKelasView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addComponent(jLabelDosen)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel5))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel4)
+                                .addComponent(jLabelMataKuliah)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
+                                .addComponent(jLabelKelompok)
                                 .addGap(6, 6, 6)
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3))
+                                .addComponent(jButtonEditKelompok))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(38, 38, 38)
-                                        .addComponent(jButton4))
+                                        .addComponent(jButtonPilihTugasIndividu))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(28, 28, 28)
-                                        .addComponent(jLabel9))
-                                    .addComponent(jButton1))
+                                        .addComponent(jLabelDaftarTugasIndividu))
+                                    .addComponent(jButtonBack))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(28, 28, 28)
-                                        .addComponent(jLabel10))
+                                        .addComponent(jLabelDaftarTugasKelompok))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(38, 38, 38)
-                                        .addComponent(jButton5))))))
+                                        .addComponent(jButtonPilihTugasKelompok))))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(169, 169, 169)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))))
+                            .addComponent(jLabelMahasiswa)
+                            .addComponent(jLabelNamaKelas))))
                 .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(jLabelNamaKelas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
+                .addComponent(jLabelMahasiswa)
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabelMataKuliah))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
+                    .addComponent(jLabelDosen)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                    .addComponent(jLabelKelompok)
                     .addComponent(jLabel8)
-                    .addComponent(jButton3))
+                    .addComponent(jButtonEditKelompok))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9)
+                        .addComponent(jLabelDaftarTugasIndividu)
                         .addGap(11, 11, 11)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4))
+                        .addComponent(jButtonPilihTugasIndividu))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
+                        .addComponent(jLabelDaftarTugasKelompok)
                         .addGap(11, 11, 11)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5)))
+                        .addComponent(jButtonPilihTugasKelompok)))
                 .addGap(30, 30, 30)
-                .addComponent(jButton1)
+                .addComponent(jButtonBack)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBackActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_jButtonBackActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButtonEditKelompokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditKelompokActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_jButtonEditKelompokActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void jButtonPilihTugasIndividuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPilihTugasIndividuActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_jButtonPilihTugasIndividuActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void jButtonPilihTugasKelompokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPilihTugasKelompokActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    }//GEN-LAST:event_jButtonPilihTugasKelompokActionPerformed
 
     /**
      * @param args the command line arguments
@@ -256,23 +253,22 @@ public class MhsLihatKelasView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JButton jButtonBack;
+    private javax.swing.JButton jButtonEditKelompok;
+    private javax.swing.JButton jButtonPilihTugasIndividu;
+    private javax.swing.JButton jButtonPilihTugasKelompok;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
+    private javax.swing.JLabel jLabelDaftarTugasIndividu;
+    private javax.swing.JLabel jLabelDaftarTugasKelompok;
+    private javax.swing.JLabel jLabelDosen;
+    private javax.swing.JLabel jLabelKelompok;
+    private javax.swing.JLabel jLabelMahasiswa;
+    private javax.swing.JLabel jLabelMataKuliah;
+    private javax.swing.JLabel jLabelNamaKelas;
+    private javax.swing.JList<String> jListTugasIndividu;
+    private javax.swing.JList<String> jListTugasKelompok;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
