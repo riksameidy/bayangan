@@ -270,7 +270,7 @@ public class Controller implements ActionListener{
            }
            
            else if(source.equals(dosenUtama.getBtnKelas())){
-           
+                
            
            }
            else if(source.equals(dosenUtama.getBtnDeleteKelas())){
@@ -282,7 +282,13 @@ public class Controller implements ActionListener{
            
            }
            else if(source.equals(dosenUtama.getBtnLogout())){
-           
+                view = new LoginView();
+                login = new LoginView();
+                login.setVisible(true);
+                dosenUtama.dispose();
+                currentUsername = "";
+                password = "";
+                login.addListener(this);
            
            }
        }

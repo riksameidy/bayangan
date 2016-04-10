@@ -27,9 +27,9 @@ public class Kelas {
         maxKelompok = 5;
         maxMhs = 40;
         maxTugas = 20;
-        mhs = new Mahasiswa[jumlahMhs];
-        tugas = new Tugas[jumlahTugas];
-        kelompok = new Kelompok[jumlahKelompok];
+        mhs = new Mahasiswa[maxMhs];
+        tugas = new Tugas[maxTugas];
+        kelompok = new Kelompok[maxKelompok];
     }
     public Kelas(String nama) {
         this.nama = nama;
@@ -38,7 +38,7 @@ public class Kelas {
         maxTugas = 20;
         mhs = new Mahasiswa[jumlahMhs];
         tugas = new Tugas[jumlahTugas];
-        kelompok = new Kelompok[jumlahKelompok];
+        kelompok = new Kelompok[maxKelompok];
     }
     public String getNama() {
         return nama;

@@ -4,13 +4,15 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/Programming/Java/TubesBayangan/src/Apps/Apps.java</file>
+            <file>file:/E:/Programming/Java/TubesBayangan/src/View/AddKelasDosen.java</file>
+            <file>file:/E:/Programming/Java/TubesBayangan/src/View/DeleteKelasDosen.java</file>
+            <file>file:/E:/Programming/Java/TubesBayangan/src/View/ProfileView.java</file>
             <file>file:/E:/Programming/Java/TubesBayangan/src/Controller/Controller.java</file>
-            <file>file:/E:/Programming/Java/TubesBayangan/src/View/MahasiswaUtamaView.java</file>
-            <file>file:/E:/Programming/Java/TubesBayangan/src/View/SignUpView.java</file>
+            <file>file:/E:/Programming/Java/TubesBayangan/src/View/PilihKelasView.java</file>
             <file>file:/E:/Programming/Java/TubesBayangan/src/Driver/Driver.java</file>
-            <file>file:/E:/Programming/Java/TubesBayangan/src/View/ConsoleView.java</file>
-            <file>file:/E:/Programming/Java/TubesBayangan/src/View/LoginView.java</file>
+            <file>file:/E:/Programming/Java/TubesBayangan/src/View/EditProfileView.java</file>
             <file>file:/E:/Programming/Java/TubesBayangan/src/View/DosenUtamaView.java</file>
+            <file>file:/E:/Programming/Java/TubesBayangan/src/View/LoginView.java</file>
         </group>
     </open-files>
 </project-private>
