@@ -34,7 +34,6 @@ public class DosenUtamaView extends javax.swing.JFrame implements View {
         btnProfile = new javax.swing.JButton();
         btnKelas = new javax.swing.JButton();
         btnAddKelas = new javax.swing.JButton();
-        btnDeleteKelas = new javax.swing.JButton();
         btnLogout = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,8 +50,6 @@ public class DosenUtamaView extends javax.swing.JFrame implements View {
                 btnAddKelasActionPerformed(evt);
             }
         });
-
-        btnDeleteKelas.setText("Delete Kelas");
 
         btnLogout.setText("Log Out");
 
@@ -72,8 +69,7 @@ public class DosenUtamaView extends javax.swing.JFrame implements View {
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(btnProfile, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnKelas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnAddKelas, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
-                                .addComponent(btnDeleteKelas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addComponent(btnAddKelas, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)))))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -87,9 +83,7 @@ public class DosenUtamaView extends javax.swing.JFrame implements View {
                 .addComponent(btnKelas)
                 .addGap(18, 18, 18)
                 .addComponent(btnAddKelas)
-                .addGap(18, 18, 18)
-                .addComponent(btnDeleteKelas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addComponent(btnLogout)
                 .addGap(27, 27, 27))
         );
@@ -104,7 +98,6 @@ public class DosenUtamaView extends javax.swing.JFrame implements View {
     public void addListener(ActionListener l){
         btnAddKelas.addActionListener(l);
         btnKelas.addActionListener(l);
-        btnDeleteKelas.addActionListener(l);
         btnLogout.addActionListener(l);
         btnProfile.addActionListener(l);
     }
@@ -112,7 +105,6 @@ public class DosenUtamaView extends javax.swing.JFrame implements View {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddKelas;
-    private javax.swing.JButton btnDeleteKelas;
     private javax.swing.JButton btnKelas;
     private javax.swing.JButton btnLogout;
     private javax.swing.JButton btnProfile;
@@ -123,9 +115,7 @@ public class DosenUtamaView extends javax.swing.JFrame implements View {
         return btnAddKelas;
     }
 
-    public JButton getBtnDeleteKelas() {
-        return btnDeleteKelas;
-    }
+    
 
     public JButton getBtnKelas() {
         return btnKelas;

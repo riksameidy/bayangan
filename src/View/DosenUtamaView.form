@@ -37,7 +37,6 @@
                               <Component id="btnProfile" alignment="0" max="32767" attributes="0"/>
                               <Component id="btnKelas" alignment="0" max="32767" attributes="0"/>
                               <Component id="btnAddKelas" alignment="0" pref="327" max="32767" attributes="0"/>
-                              <Component id="btnDeleteKelas" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -57,9 +56,7 @@
               <Component id="btnKelas" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnAddKelas" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnDeleteKelas" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="51" max="32767" attributes="0"/>
+              <EmptySpace pref="92" max="32767" attributes="0"/>
               <Component id="btnLogout" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
           </Group>
@@ -89,11 +86,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddKelasActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnDeleteKelas">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Delete Kelas"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnLogout">
       <Properties>

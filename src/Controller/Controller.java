@@ -29,6 +29,7 @@ public class Controller implements ActionListener{
     private ProfileView profile;
     private EditProfileView editProfile;
     private AddKelasDosen dosenAddKelas;
+    private DeleteKelasDosen dosenDeleteKelas;
     private PilihKelasView pilKelas;
     private MenuKelasUtamaDosen kelasUtamaDosen;
     
@@ -312,10 +313,8 @@ public class Controller implements ActionListener{
                 
            
            }
-           else if(source.equals(dosenUtama.getBtnDeleteKelas())){
-               
            
-           }
+           
            else if(source.equals(dosenUtama.getBtnAddKelas())){
                view= new AddKelasDosen();
                dosenAddKelas = new AddKelasDosen();
@@ -512,6 +511,7 @@ public class Controller implements ActionListener{
            }
            else if(source.equals(kelasUtamaDosen.getBtnKelompok())){
                
+               
            
            }
            else if(source.equals(kelasUtamaDosen.getBtnMhs())){
@@ -519,6 +519,11 @@ public class Controller implements ActionListener{
            
            }
            else if(source.equals(kelasUtamaDosen.getBtnTugas())){
+               
+           
+           }
+           
+           else if(source.equals(kelasUtamaDosen.getBtnKelas())){
                
            
            }

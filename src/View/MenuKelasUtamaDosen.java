@@ -31,17 +31,14 @@ public class MenuKelasUtamaDosen extends javax.swing.JFrame implements View {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         btnTugas = new javax.swing.JButton();
         btnKelompok = new javax.swing.JButton();
         btnMhs = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
         lnamaKelas = new javax.swing.JLabel();
-        btnEditKelas = new javax.swing.JButton();
+        btnKelas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Menu Kelas Utama");
 
         btnTugas.setText("Pengelolaan Tugas");
 
@@ -53,48 +50,44 @@ public class MenuKelasUtamaDosen extends javax.swing.JFrame implements View {
 
         lnamaKelas.setText("{nama Kelas Here}");
 
-        btnEditKelas.setText("Edit Kelas");
+        btnKelas.setText("Info Kelas");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnKelas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnTugas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnKelompok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnMhs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(45, 45, 45))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(btnBack))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(144, 144, 144)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lnamaKelas)
-                            .addComponent(jLabel1))))
-                .addContainerGap(166, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnEditKelas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnTugas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnKelompok, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnMhs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(45, 45, 45))
+                        .addGap(141, 141, 141)
+                        .addComponent(lnamaKelas)))
+                .addContainerGap(169, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lnamaKelas)
                 .addGap(18, 18, 18)
+                .addComponent(btnKelas)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnTugas)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnKelompok)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMhs)
-                .addGap(18, 18, 18)
-                .addComponent(btnEditKelas)
-                .addGap(18, 18, 18)
+                .addGap(64, 64, 64)
                 .addComponent(btnBack)
                 .addContainerGap(45, Short.MAX_VALUE))
         );
@@ -109,11 +102,10 @@ public class MenuKelasUtamaDosen extends javax.swing.JFrame implements View {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnEditKelas;
+    private javax.swing.JButton btnKelas;
     private javax.swing.JButton btnKelompok;
     private javax.swing.JButton btnMhs;
     private javax.swing.JButton btnTugas;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lnamaKelas;
     // End of variables declaration//GEN-END:variables
 
@@ -123,11 +115,11 @@ public class MenuKelasUtamaDosen extends javax.swing.JFrame implements View {
         btnKelompok.addActionListener(l);
         btnMhs.addActionListener(l);
         btnTugas.addActionListener(l);
-        btnEditKelas.addActionListener(l);
+        btnKelas.addActionListener(l);
     }
 
-    public JButton getBtnEditKelas() {
-        return btnEditKelas;
+    public JButton getBtnKelas() {
+        return btnKelas;
     }
     
     public JButton getBtnBack() {
