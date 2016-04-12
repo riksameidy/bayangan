@@ -299,22 +299,24 @@ public class Controller implements ActionListener{
                 String[] namaKelas;
                 if(jum==0){
                     JOptionPane.showMessageDialog(j,"Anda Belum Memiliki Kelas");
+                    dosenUtama = new DosenUtamaView();
+                    dosenUtama.addListener(this);
                     
                 }
                 else{
                     namaKelas = new String[jum];
                     int i=0;
+                    view = new PilihKelasView();
+                    pilKelas = new PilihKelasView();
+                    pilKelas.setVisible(true);
+                    dosenUtama.dispose();
+                    pilKelas.AddListener(this);
                     while(i<jum){
                         namaKelas[i] = apps.getDosen(currentUsername).getKelas(i).getNama();
                         i++;
                     }
                     pilKelas.setList(namaKelas);
                     
-                    view = new PilihKelasView();
-                    pilKelas = new PilihKelasView();
-                    pilKelas.setVisible(true);
-                    dosenUtama.dispose();
-                    pilKelas.AddListener(this);
                 }
                 
                 
