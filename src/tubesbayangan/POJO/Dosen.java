@@ -24,11 +24,13 @@ public class Dosen extends Orang {
     public Dosen() {
         super.setNama("Default");
         kelas = new Kelas[5];
+        maxKelas = 5;
     }
 
     public Dosen(long nip) {
         this.nip = nip;
         kelas = new Kelas[5];
+        maxKelas = 5;
     }
     
     public Dosen(String nama, long nip, int maxKelas){
@@ -51,7 +53,17 @@ public class Dosen extends Orang {
     }
     public void createKelas(String nama){
         if(jumlahKelas<maxKelas){
-            kelas[++jumlahKelas] = new Kelas(nama);
+            kelas[jumlahKelas++] = new Kelas(nama);
+            
+        } 
+    }
+    public void createKelas(String nama,String kodeMK ,int jumlahMhs){
+        if(jumlahKelas<maxKelas){
+            kelas[jumlahKelas++] = new Kelas(nama);
+            kelas[jumlahKelas-1].setMataKuliah(new MataKuliah(kodeMK));
+            kelas[jumlahKelas-1].setMaxMhs(jumlahMhs);
+            
+            
         } 
     }
     public void deleteKelas(int n){

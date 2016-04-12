@@ -40,6 +40,7 @@ public class Kelas {
         tugas = new Tugas[jumlahTugas];
         kelompok = new Kelompok[maxKelompok];
     }
+    
     public String getNama() {
         return nama;
     }
@@ -60,17 +61,17 @@ public class Kelas {
     }
     public void addKelompok(Kelompok k){
         if(jumlahKelompok<maxKelompok){
-            kelompok[++jumlahKelompok] = k;
+            kelompok[jumlahKelompok++] = k;
         }
     }
     public void addTugas(String nama){
         if(jumlahTugas<maxTugas){
-            tugas[++jumlahTugas] = new Tugas(nama);
+            tugas[jumlahTugas++] = new Tugas(nama);
         }
     }
     public void addMahasiswa(Mahasiswa m){
         if(jumlahMhs<maxMhs){
-            mhs[++jumlahMhs] = m;
+            mhs[jumlahMhs++] = m;
         }
     }
     public void setMataKuliah(MataKuliah m){

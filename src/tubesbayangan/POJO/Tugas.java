@@ -62,7 +62,7 @@ public class Tugas {
     }    
     public void addSoal(String soal){
         if(jumlahSoal<maxSoal){
-            this.soal[++jumlahSoal] = soal;
+            this.soal[jumlahSoal++] = soal;
         }
     }
     public void addJawaban(String jawaban,int noSoal){

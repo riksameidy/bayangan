@@ -62,7 +62,7 @@ public class Kelompok {
     }
     public void addTugas(Tugas t){
         if(jumlahTugas<maxTugas){
-            tugas[++jumlahTugas] = t;
+            tugas[jumlahTugas++] = t;
         }
     }
     public void doTugas(int t, String jawaban, int noSoal){
@@ -91,7 +91,7 @@ public class Kelompok {
     }
     public void addAnggota(Mahasiswa m){
         if(jumlahAnggota<maxAnggota){
-            anggota[++jumlahAnggota] = m;
+            anggota[jumlahAnggota++] = m;
         }
     }
     public void deleteAnggota(int n){

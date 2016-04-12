@@ -10,7 +10,9 @@ import View.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JList;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -26,18 +28,30 @@ public class Controller implements ActionListener{
     private MahasiswaUtamaView mahasiswaUtama;
     private ProfileView profile;
     private EditProfileView editProfile;
+    private AddKelasDosen dosenAddKelas;
+    private PilihKelasView pilKelas;
+    private MenuKelasUtamaDosen kelasUtamaDosen;
+    
     
     private  String username="";
     private  String password="";
     private  String nama;
     private  String nimnip;
-    private  String email; 
+    private  String email;
     private long nip;
     private long nim;
+    
+    private String kodeMK;
+    private String sJumlah;
+    private int jumlah;
+    private String kodeKelas;
+    
+    
     
     private int status = 0; //1 jika Mhs , 2 jika Dosen;
     
     private String currentUsername;
+    private String currentKodeKelas;
     
     public Controller(Apps apps){
         this.apps = apps;
@@ -270,16 +284,45 @@ public class Controller implements ActionListener{
            }
            
            else if(source.equals(dosenUtama.getBtnKelas())){
+                view = new PilihKelasView();
+                pilKelas = new PilihKelasView();
+                pilKelas.setVisible(true);
+                dosenUtama.dispose();
+                
+                
+                //
+                int jum = apps.getDosen(currentUsername).getJumlahKelas();
+                String[] namaKelas;
+                if(jum==0){
+                namaKelas = new String[1];
+                namaKelas[0]= "Belum memiliki Kelas";
+                pilKelas.setList(namaKelas);
+                }
+                else{
+                    namaKelas = new String[jum];
+                    int i=0;
+                    while(i<jum){
+                        namaKelas[i] = apps.getDosen(currentUsername).getKelas(i).getNama();
+                        i++;
+                    }
+                    pilKelas.setList(namaKelas);
+                }
+                pilKelas.AddListener(this);
+                
                 
            
            }
            else if(source.equals(dosenUtama.getBtnDeleteKelas())){
-           
+               
            
            }
            else if(source.equals(dosenUtama.getBtnAddKelas())){
-           
-           
+               view= new AddKelasDosen();
+               dosenAddKelas = new AddKelasDosen();
+               dosenAddKelas.setVisible(true);
+               dosenUtama.dispose();
+               dosenAddKelas.addListener(this);
+               
            }
            else if(source.equals(dosenUtama.getBtnLogout())){
                 view = new LoginView();
@@ -386,6 +429,103 @@ public class Controller implements ActionListener{
            }
            
        }
+       
+       else if(view instanceof AddKelasDosen){
+           
+           if(source.equals(dosenAddKelas.getBtnBack())){
+               view = new DosenUtamaView();
+               dosenUtama = new DosenUtamaView();
+               dosenUtama.setVisible(true);
+               dosenAddKelas.dispose();
+               dosenUtama.addListener(this);
+           }
+           else if(source.equals(dosenAddKelas.getBtnSubmit())){
+               if(kodeMK.equals("")||kodeKelas.equals("")){
+                   dosenAddKelas.setNotification("Field tidak boleh kosong");
+               }
+               else{
+               apps.getDosen(currentUsername).createKelas(kodeKelas,kodeMK,jumlah);
+               view = new DosenUtamaView();
+               dosenUtama = new DosenUtamaView();
+               dosenUtama.setVisible(true);
+               dosenAddKelas.dispose();
+               dosenUtama.addListener(this);
+               }
+           }
+           else if(source.equals(dosenAddKelas.gettFJum())){
+               sJumlah = dosenAddKelas.gettFJum().getText();
+               try{
+                   jumlah = Integer.parseInt(sJumlah);
+               }
+               catch(NumberFormatException ex){
+                   dosenAddKelas.setNotification("Not a number, try again");
+                   jumlah = 0;
+               }
+           }
+           else if(source.equals(dosenAddKelas.gettFKodeKelas())){
+               kodeKelas = dosenAddKelas.gettFKodeKelas().getText();
+           }
+           else if(source.equals(dosenAddKelas.gettFkodeMK())){
+               kodeMK = dosenAddKelas.gettFkodeMK().getText();
+           }
+           
+       }
+       
+       //View Pilih Kelas
+       
+       else if(view instanceof PilihKelasView){
+           if(source.equals(pilKelas.getBtnPilih())){
+               
+               currentKodeKelas = pilKelas.getSelectedList();
+               view = new MenuKelasUtamaDosen();
+               kelasUtamaDosen = new MenuKelasUtamaDosen();
+               kelasUtamaDosen.setVisible(true);
+               pilKelas.dispose();
+               
+               kelasUtamaDosen.setLnamaKelas(currentKodeKelas);
+               kelasUtamaDosen.addListener(this);
+               
+               
+           }
+           else if(source.equals(pilKelas.getBtnBack())){
+               view = new DosenUtamaView();
+               dosenUtama = new DosenUtamaView();
+               dosenUtama.setVisible(true);
+               pilKelas.dispose();
+               dosenUtama.addListener(this);
+           
+           }
+           
+                   
+       }
+       
+       else if(view instanceof MenuKelasUtamaDosen ){
+           if(source.equals(kelasUtamaDosen.getBtnBack())){
+               
+               view = new DosenUtamaView();
+               dosenUtama = new DosenUtamaView();
+               dosenUtama.setVisible(true);
+               pilKelas.dispose();
+               dosenUtama.addListener(this);
+               
+           
+           }
+           else if(source.equals(kelasUtamaDosen.getBtnKelompok())){
+               
+           
+           }
+           else if(source.equals(kelasUtamaDosen.getBtnMhs())){
+               
+           
+           }
+           else if(source.equals(kelasUtamaDosen.getBtnTugas())){
+               
+           
+           }
+       
+       }
+       
+       
        
        else if(view instanceof MahasiswaUtamaView){
            

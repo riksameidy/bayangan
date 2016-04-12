@@ -51,7 +51,7 @@ public class Mahasiswa extends Orang {
     }
     public void addTugas(Tugas t){
         if(jumlahTugas<maxTugas){
-            tugas[++jumlahTugas] = t;
+            tugas[jumlahTugas++] = t;
         }
     }
     public void doTugas(int t, String jawaban, int noSoal){

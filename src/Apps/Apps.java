@@ -19,10 +19,10 @@ import tubesbayangan.POJO.MataKuliah;
  */
 public class Apps {
     
-    List<Mahasiswa> daftarMahasiswa = new ArrayList<>();
-    List<Dosen> daftarDosen = new ArrayList<>();
-    List<Kelompok> daftarKelompok = new ArrayList<>();
-    List<MataKuliah> daftarMK = new ArrayList<>();
+    private List<Mahasiswa> daftarMahasiswa = new ArrayList<>();
+    private List<Dosen> daftarDosen = new ArrayList<>();
+    private List<Kelompok> daftarKelompok = new ArrayList<>();
+    private List<MataKuliah> daftarMK = new ArrayList<>();
     
     public void createDosen(long nip){
         Dosen d = new Dosen(nip);
