@@ -90,4 +90,28 @@ public class Kelas {
     public Tugas getTugas(int n){
         return tugas[n];
     }
+
+    public int getJumlahMhs() {
+        return jumlahMhs;
+    }
+
+    public int getJumlahTugas() {
+        return jumlahTugas;
+    }
+
+    public int getJumlahKelompok() {
+        return jumlahKelompok;
+    }
+
+    public int getJumlahTugasIndividu(){
+        int hasil=0;
+        for(int i=0;i<jumlahTugas;i++){
+            if(tugas[i].getIsTugasIndividu()){
+                hasil++;
+            }
+        }
+        return hasil;
+    }
+
 }
+

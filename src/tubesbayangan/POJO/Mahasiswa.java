@@ -62,4 +62,6 @@ public class Mahasiswa extends Orang {
     public void submitTugas(int t){
         tugas[t].setStatusDikerjakan(true);
     }
+    
+    
 }

@@ -11,8 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionListener;
+import tubesbayangan.POJO.Kelas;
 
 /**
  *
@@ -29,9 +31,12 @@ public class Controller implements ActionListener{
     private ProfileView profile;
     private EditProfileView editProfile;
     private AddKelasDosen dosenAddKelas;
+    private KelolaKelasDosen kelolaKelas;
     private DeleteKelasDosen dosenDeleteKelas;
     private PilihKelasView pilKelas;
     private MenuKelasUtamaDosen kelasUtamaDosen;
+    
+    private JOptionPane j;
     
     
     private  String username="";
@@ -60,11 +65,13 @@ public class Controller implements ActionListener{
         login = new LoginView();
         login.setVisible(true);
         login.addListener(this);
+        j = new JOptionPane();
         
         
         
     }
     
+   
     @Override
     public void actionPerformed(ActionEvent e) {
         int idx;
@@ -285,19 +292,14 @@ public class Controller implements ActionListener{
            }
            
            else if(source.equals(dosenUtama.getBtnKelas())){
-                view = new PilihKelasView();
-                pilKelas = new PilihKelasView();
-                pilKelas.setVisible(true);
-                dosenUtama.dispose();
                 
                 
                 //
                 int jum = apps.getDosen(currentUsername).getJumlahKelas();
                 String[] namaKelas;
                 if(jum==0){
-                namaKelas = new String[1];
-                namaKelas[0]= "Belum memiliki Kelas";
-                pilKelas.setList(namaKelas);
+                    JOptionPane.showMessageDialog(j,"Anda Belum Memiliki Kelas");
+                    
                 }
                 else{
                     namaKelas = new String[jum];
@@ -307,8 +309,13 @@ public class Controller implements ActionListener{
                         i++;
                     }
                     pilKelas.setList(namaKelas);
+                    
+                    view = new PilihKelasView();
+                    pilKelas = new PilihKelasView();
+                    pilKelas.setVisible(true);
+                    dosenUtama.dispose();
+                    pilKelas.AddListener(this);
                 }
-                pilKelas.AddListener(this);
                 
                 
            
@@ -501,10 +508,11 @@ public class Controller implements ActionListener{
        else if(view instanceof MenuKelasUtamaDosen ){
            if(source.equals(kelasUtamaDosen.getBtnBack())){
                
+               
                view = new DosenUtamaView();
                dosenUtama = new DosenUtamaView();
                dosenUtama.setVisible(true);
-               pilKelas.dispose();
+               kelasUtamaDosen.dispose();
                dosenUtama.addListener(this);
                
            
@@ -524,10 +532,70 @@ public class Controller implements ActionListener{
            }
            
            else if(source.equals(kelasUtamaDosen.getBtnKelas())){
+               view = new KelolaKelasDosen();
+               kelolaKelas = new KelolaKelasDosen();
+               kelolaKelas.setVisible(true);
+               kelasUtamaDosen.dispose();
+               kelolaKelas.addListener(this);
+               
+               //add inisiasi here
+               int idxKelas = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+               String namaMK = apps.getDosen(currentUsername).getKelas(idxKelas).getMataKuliah().getKodeMK();
+               int sksMK = apps.getDosen(currentUsername).getKelas(idxKelas).getMataKuliah().getSks();
+               int jumlahMhs = apps.getDosen(currentUsername).getKelas(idxKelas).getJumlahMhs();
+               int jumlahKelompok = apps.getDosen(currentUsername).getKelas(idxKelas).getMaxKelompok();
+               int jumlahTugasTotal = apps.getDosen(currentUsername).getKelas(idxKelas).getJumlahTugas();
+               int jumlahTugasIndividu = apps.getDosen(currentUsername).getKelas(idxKelas).getJumlahTugasIndividu();
+               int jumlahTugasKelompok = jumlahTugasTotal - jumlahTugasIndividu;
+               
+               kelolaKelas.setlNamaKelas(currentKodeKelas);
+               kelolaKelas.setlMK(namaMK);
+               kelolaKelas.setlSks(Integer.toString(sksMK));
+               kelolaKelas.setlJumlahMhs(Integer.toString(jumlahMhs));
+               kelolaKelas.setlJumlahKelompok(Integer.toString(jumlahKelompok));
+               kelolaKelas.setlJumlahTugasTotal(Integer.toString(jumlahTugasTotal));
+               kelolaKelas.setlJumlahTugasIndividu(Integer.toString(jumlahTugasIndividu));
+               kelolaKelas.setlJumlahTugasKelompok(Integer.toString(jumlahTugasKelompok));
+               
+           }
+           
+           
+       
+       }
+       
+       else if(view instanceof KelolaKelasDosen){
+           
+           if(source.equals(kelolaKelas.getBtnBack())){
+               view = new MenuKelasUtamaDosen();
+               kelasUtamaDosen = new MenuKelasUtamaDosen();
+               kelasUtamaDosen.setVisible(true);
+               kelolaKelas.dispose();
+               kelasUtamaDosen.addListener(this);
+               
+               kelasUtamaDosen.setLnamaKelas(currentKodeKelas);
                
            
            }
-       
+           
+           else if(source.equals(kelolaKelas.getBtnDeleteKelas())){
+               
+              
+               int result = JOptionPane.showConfirmDialog(j, "Are You Sure? ","Delete Kelas",JOptionPane.YES_NO_OPTION);
+               if(result==0){
+                   
+                   JOptionPane.showMessageDialog(j, "Kelas Dihapus");
+                   
+                   view = new DosenUtamaView();
+                   dosenUtama = new DosenUtamaView();
+                   dosenUtama.setVisible(true);
+                   kelolaKelas.dispose();
+                   apps.getDosen(currentUsername).deleteKelas(apps.getDosen(currentUsername).idxKelas(currentKodeKelas));
+                   currentKodeKelas = "";
+                   dosenUtama.addListener(this);
+                   
+               }
+               
+           }
        }
        
        
