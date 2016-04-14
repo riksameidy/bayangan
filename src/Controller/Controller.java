@@ -280,9 +280,9 @@ public class Controller implements ActionListener{
                profile.AddListener(this);
                dosenUtama.dispose();
                profile.setVisible(true);
-               //inisiasi view
-               if(apps.searchMhs(currentUsername)==-1){
-                //dosen
+             
+              
+            
                 
                 profile.setJenisUserLabel("Dosen");
                 profile.setNimnipLabel("NIP");
@@ -291,10 +291,8 @@ public class Controller implements ActionListener{
                 profile.setNipnimL(Long.toString(apps.getDosen(currentUsername).getNip()));
                 profile.setEmailL(apps.getDosen(currentUsername).getEmail());
                 
-                }
-               else{
-                   //mahasiswa
-               }
+               
+                
            
            }
            
@@ -387,7 +385,7 @@ public class Controller implements ActionListener{
                     editProfile.addListener(this);
                }
                else{
-                   if(apps.searchMhs(currentUsername)==-1){
+                   
                     apps.EditDosen(currentUsername, password, nama, email);
                    
                     view = new ProfileView();
@@ -403,10 +401,7 @@ public class Controller implements ActionListener{
                     profile.setEmailL(apps.getDosen(currentUsername).getEmail());
                     profile.AddListener(this);
                    
-                   }
-                   else{
-                   //edit Mahasiswa
-                   }
+                  
                }
            
            }
@@ -416,8 +411,8 @@ public class Controller implements ActionListener{
                profile.setVisible(true);
                editProfile.dispose();
                profile.AddListener(this);
-               if(apps.searchMhs(currentUsername)==-1){
-                //dosen
+              
+                
                 
                 profile.setJenisUserLabel("Dosen");
                 profile.setNimnipLabel("NIP");
@@ -426,10 +421,7 @@ public class Controller implements ActionListener{
                 profile.setNipnimL(Long.toString(apps.getDosen(currentUsername).getNip()));
                 profile.setEmailL(apps.getDosen(currentUsername).getEmail());
                 
-                }
-               else{
-                   //mahasiswa
-               }
+               
            }
            
            else if(source.equals(editProfile.gettFEmail())){
