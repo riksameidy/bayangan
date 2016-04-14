@@ -66,6 +66,14 @@ public class Tugas {
             this.soal[jumlahSoal++] = soal;
         }
     }
+    public void addSoal(String soal,int idx){
+        if(idx < maxSoal){
+            this.soal[idx] = soal;
+        }
+    }
+    
+    
+    
     public void addJawaban(String jawaban,int noSoal){
         if(jumlahJawaban<maxSoal){
             jumlahJawaban++;
@@ -77,6 +85,10 @@ public class Tugas {
     }
     public String getJawaban(int n){
         return jawaban[n];
+    }
+    
+    public int getJumlahSoal(){
+        return jumlahSoal;
     }
     
     

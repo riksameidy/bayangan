@@ -16,10 +16,10 @@ public class Driver {
     public static void main(String[] args) {
         Apps apps = new Apps();
         apps.createDosen(1);
-        apps.getDosen(1).setUsername("riksa");
-        apps.getDosen(1).setPassword("yu");
-        System.out.println(apps.getDosen("riksa").getUsername());
-        System.out.println(apps.getDosen("riksa").getPassword());
+        apps.getDosen(1).setUsername("r");
+        apps.getDosen(1).setPassword("y");
+        System.out.println(apps.getDosen("r").getUsername());
+        System.out.println(apps.getDosen("r").getPassword());
         
         Controller c = new Controller(apps);
         

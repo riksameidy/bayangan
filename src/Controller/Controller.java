@@ -38,6 +38,7 @@ public class Controller implements ActionListener{
     private PengelolaanTugasView kelolaTugas;
     private AddTugasDosenView addTugas;
     private PilihTugasDosen pilTugas;
+    private AddSoalView addSoal;
     
     
     private JOptionPane j;
@@ -86,6 +87,8 @@ public class Controller implements ActionListener{
         int idx;
         int idxTugas;
         Object source = e.getSource();
+        
+        
        if(view instanceof LoginView){          
            if(source.equals( login.getTextFieldUsername())){
                
@@ -655,7 +658,7 @@ public class Controller implements ActionListener{
                    
                    if(temp==null){
                        temp = new String[1];
-                       temp[0] = "Tidak Ada Tugas ";
+                       temp[0] = "Tidak Ada Tugas";
                        pilTugas.setList(temp);
                    }
                    else{
@@ -786,7 +789,30 @@ public class Controller implements ActionListener{
                if(currentTugas==null){
                    JOptionPane.showMessageDialog(j,"Silahkan Pilih Tugas");
                }
+               else if(currentTugas.equals("Tidak Ada Tugas")){
+                   JOptionPane.showMessageDialog(j,"Tidak ada Tugas yang dipilih");
+               }
                else{
+                   
+                   String[] s;
+                   idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+                   idxTugas = apps.getDosen(currentUsername).getKelas(idx).idxTugas(currentTugas);
+                   int x = apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getMaxSoal();
+                   s = new String[x];
+                   for(int i=0;i<x;i++){
+                       s[i] = "soal "+ Integer.toString(i+1);
+                   }
+                   
+                   
+                   view = new AddSoalView();
+                   addSoal = new AddSoalView();
+                   addSoal.setVisible(true);
+                   
+                   addSoal.setComboBoxSoal(s);
+                   addSoal.setlNamaTugas(apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getNamaTugas());
+                   
+                   addSoal.addListener(this);
+                   pilTugas.dispose();
                    
                }
                
@@ -805,11 +831,57 @@ public class Controller implements ActionListener{
            }
        
        }
+       
+       else if(view instanceof AddSoalView){
+           
+           int idxCbSoal = addSoal.getComboBoxSoal().getSelectedIndex();
+           
+           if(source.equals(addSoal.getBtnAddSoal())){
+               if(addSoal.getTfInputSoal().getText().equals("")){
+                   JOptionPane.showMessageDialog(j, "Field Soal tidak boleh Kosong");
+               }
+               else{
+                   
+                       idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+                       idxTugas = apps.getDosen(currentUsername).getKelas(idx).idxTugas(currentTugas);
+                       String s = addSoal.getTfInputSoal().getText();
+                       apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).addSoal(s);
+                       addSoal.settFshowSoal(apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getSoal(idxCbSoal));
+                   
+                   JOptionPane.showMessageDialog(j, "Soal Berhasil Ditambahkan");
+               }
+               
+           }
+           else if(source.equals(addSoal.getBtnFinish())){
+               idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+               idxTugas = apps.getDosen(currentUsername).getKelas(idx).idxTugas(currentTugas);
+               
+               apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).setStatusAssign(true);
+               
+               view = new PengelolaanTugasView();
+               kelolaTugas = new PengelolaanTugasView();
+               kelolaTugas.setVisible(true);
+               kelolaTugas.addListener(this);
+               addSoal.dispose();
+           
+           }
+           
+           
+           else if(source.equals(addSoal.getComboBoxSoal())){
+               idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+               idxTugas = apps.getDosen(currentUsername).getKelas(idx).idxTugas(currentTugas);
+               //int x = apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getJumlahSoal();
+               addSoal.settFshowSoal(apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getSoal(idxCbSoal));
+               addSoal.setTfInputSoal("");
+               
+           }
+           
+           
+           
+       
+       
+       }
             
-       
-       
-       
-       
        
        else if(view instanceof MahasiswaUtamaView){
            
