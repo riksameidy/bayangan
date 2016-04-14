@@ -66,7 +66,9 @@ public class Kelas {
     }
     public void addTugas(String nama){
         if(jumlahTugas<maxTugas){
-            tugas[jumlahTugas++] = new Tugas(nama);
+            tugas[jumlahTugas] = new Tugas(nama);
+            tugas[jumlahTugas].setStatusAssign(false);
+            jumlahTugas++;
         }
     }
     public void addMahasiswa(Mahasiswa m){
@@ -122,6 +124,47 @@ public class Kelas {
         }
         return hasil;
     
+    }
+    
+    public String[] getAllTugasAssigned(){
+        if(jumlahTugas==0){
+            return null;
+        }
+        else{
+        String[] temp = new String[jumlahTugas];
+        int jum = 0;
+        for(int i=0;i<jumlahTugas;i++){
+           if(tugas[i].getStatusAssign()){
+            temp[i] = tugas[i].getNamaTugas();
+            jum++;
+           }
+        }
+        if(jum==0){return null;}
+        else{
+        return temp;
+        }
+        }
+    }
+    
+    public String[] getAllTugasnotAssigned(){
+        if(jumlahTugas==0){
+            return null;
+        }
+        else{
+        String[] temp = new String[jumlahTugas];
+        int jum=0;
+        for(int i=0;i<jumlahTugas;i++){
+           if(!tugas[i].getStatusAssign()){
+            temp[i] = tugas[i].getNamaTugas();
+            jum++;
+           }
+        }
+        if(jum==0){return null;}
+        else{
+        return temp;
+        }
+       
+        }
     }
 
 }

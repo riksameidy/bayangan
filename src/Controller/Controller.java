@@ -37,6 +37,8 @@ public class Controller implements ActionListener{
     private MenuKelasUtamaDosen kelasUtamaDosen;
     private PengelolaanTugasView kelolaTugas;
     private AddTugasDosenView addTugas;
+    private PilihTugasDosen pilTugas;
+    
     
     private JOptionPane j;
     
@@ -64,6 +66,7 @@ public class Controller implements ActionListener{
     
     private String currentUsername;
     private String currentKodeKelas;
+    private String currentTugas;
     
     public Controller(Apps apps){
         this.apps = apps;
@@ -621,7 +624,6 @@ public class Controller implements ActionListener{
            
            }
            else if(source.equals(kelolaTugas.getBtnAddTugas())){
-               if(source.equals(kelolaTugas.getBtnAddTugas())){
                
                view = new AddTugasDosenView();
                addTugas = new AddTugasDosenView();
@@ -629,14 +631,57 @@ public class Controller implements ActionListener{
                kelolaTugas.dispose();
                addTugas.addListener(this);
                
-               
-               }
-               
            
            }
            else if(source.equals(kelolaTugas.getBtnPilihTugas())){
                
-           
+               idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+               int jum = apps.getDosen(currentUsername).getKelas(idx).getJumlahTugas();
+               if(jum==0){
+                   JOptionPane.showMessageDialog(j, "Belum Memiliki Tugas");
+                   kelolaTugas.addListener(this);
+                   
+               }
+               else{
+                   view = new PilihTugasDosen();
+                   pilTugas = new PilihTugasDosen();
+                   pilTugas.setVisible(true);
+                   kelolaTugas.dispose();
+                   pilTugas.AddListener(this);
+                   String[] temp;
+                   
+                   
+                   temp = apps.getDosen(currentUsername).getKelas(idx).getAllTugasnotAssigned();
+                   
+                   if(temp==null){
+                       temp = new String[1];
+                       temp[0] = "Tidak Ada Tugas ";
+                       pilTugas.setList(temp);
+                   }
+                   else{
+                       pilTugas.setList(temp);
+                   } 
+                   
+                   temp = apps.getDosen(currentUsername).getKelas(idx).getAllTugasAssigned();
+                   
+                   if(temp==null){
+                       temp = new String[1];
+                       temp[0] = "Tidak Ada Tugas ";
+                       pilTugas.setListTugasAssigned(temp);
+                   
+                   }
+                   else{
+                       pilTugas.setListTugasAssigned(temp);
+                     
+                   }
+                   
+                   
+               }
+               
+               
+               
+               
+               
            }
        
        }
@@ -724,6 +769,45 @@ public class Controller implements ActionListener{
            
        
        }
+       
+       else if(view instanceof PilihTugasDosen){
+           
+           if(source.equals(pilTugas.getBtnBack())){
+               view = new PengelolaanTugasView();
+               kelolaTugas = new PengelolaanTugasView();
+               kelolaTugas.setVisible(true);
+               kelolaTugas.addListener(this);
+               pilTugas.dispose();
+           
+           }
+           else if(source.equals(pilTugas.getBtnAssign())){
+               
+               currentTugas = pilTugas.getListTugas().getSelectedValue();
+               if(currentTugas==null){
+                   JOptionPane.showMessageDialog(j,"Silahkan Pilih Tugas");
+               }
+               else{
+                   
+               }
+               
+               
+           }
+           
+           else if(source.equals(pilTugas.getBtnEdit())){
+               currentTugas = pilTugas.getListTugasAssigned().getSelectedValue();
+               if(currentTugas==null){
+                   JOptionPane.showMessageDialog(j,"Silahkan Pilih Tugas yang akan di edit");
+               }
+               else{
+                    
+               }
+           
+           }
+       
+       }
+            
+       
+       
        
        
        
