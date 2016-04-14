@@ -35,6 +35,8 @@ public class Controller implements ActionListener{
     private DeleteKelasDosen dosenDeleteKelas;
     private PilihKelasView pilKelas;
     private MenuKelasUtamaDosen kelasUtamaDosen;
+    private PengelolaanTugasView kelolaTugas;
+    private AddTugasDosenView addTugas;
     
     private JOptionPane j;
     
@@ -52,9 +54,13 @@ public class Controller implements ActionListener{
     private int jumlah;
     private String kodeKelas;
     
+    private String namaTugas;
+    private int sjumlahSoal;
+    
     
     
     private int status = 0; //1 jika Mhs , 2 jika Dosen;
+    private int jenisTugas=0; //1 jika Individu , 2 Jika Kelompok
     
     private String currentUsername;
     private String currentKodeKelas;
@@ -75,6 +81,7 @@ public class Controller implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         int idx;
+        int idxTugas;
         Object source = e.getSource();
        if(view instanceof LoginView){          
            if(source.equals( login.getTextFieldUsername())){
@@ -299,7 +306,10 @@ public class Controller implements ActionListener{
                 String[] namaKelas;
                 if(jum==0){
                     JOptionPane.showMessageDialog(j,"Anda Belum Memiliki Kelas");
+                    view = new DosenUtamaView();
+                    dosenUtama.dispose();
                     dosenUtama = new DosenUtamaView();
+                    dosenUtama.setVisible(true);
                     dosenUtama.addListener(this);
                     
                 }
@@ -310,12 +320,12 @@ public class Controller implements ActionListener{
                     pilKelas = new PilihKelasView();
                     pilKelas.setVisible(true);
                     dosenUtama.dispose();
-                    pilKelas.AddListener(this);
                     while(i<jum){
                         namaKelas[i] = apps.getDosen(currentUsername).getKelas(i).getNama();
                         i++;
                     }
                     pilKelas.setList(namaKelas);
+                    pilKelas.AddListener(this);
                     
                 }
                 
@@ -529,6 +539,13 @@ public class Controller implements ActionListener{
            
            }
            else if(source.equals(kelasUtamaDosen.getBtnTugas())){
+               view = new PengelolaanTugasView();
+               kelolaTugas = new PengelolaanTugasView();
+               kelolaTugas.setVisible(true);
+               
+               kelasUtamaDosen.dispose();
+               kelolaTugas.addListener(this);
+               
                
            
            }
@@ -545,7 +562,7 @@ public class Controller implements ActionListener{
                String namaMK = apps.getDosen(currentUsername).getKelas(idxKelas).getMataKuliah().getKodeMK();
                int sksMK = apps.getDosen(currentUsername).getKelas(idxKelas).getMataKuliah().getSks();
                int jumlahMhs = apps.getDosen(currentUsername).getKelas(idxKelas).getJumlahMhs();
-               int jumlahKelompok = apps.getDosen(currentUsername).getKelas(idxKelas).getMaxKelompok();
+               int jumlahKelompok = apps.getDosen(currentUsername).getKelas(idxKelas).getJumlahKelompok();
                int jumlahTugasTotal = apps.getDosen(currentUsername).getKelas(idxKelas).getJumlahTugas();
                int jumlahTugasIndividu = apps.getDosen(currentUsername).getKelas(idxKelas).getJumlahTugasIndividu();
                int jumlahTugasKelompok = jumlahTugasTotal - jumlahTugasIndividu;
@@ -598,6 +615,122 @@ public class Controller implements ActionListener{
                }
                
            }
+       }
+       
+       else if(view instanceof PengelolaanTugasView){
+           
+           if(source.equals(kelolaTugas.getBtnBack())){
+               view = new MenuKelasUtamaDosen();
+               kelasUtamaDosen = new MenuKelasUtamaDosen();
+               kelasUtamaDosen.setVisible(true);
+               kelolaTugas.dispose();
+               kelasUtamaDosen.addListener(this);
+               kelasUtamaDosen.setLnamaKelas(currentKodeKelas);
+           
+           }
+           else if(source.equals(kelolaTugas.getBtnAddTugas())){
+               if(source.equals(kelolaTugas.getBtnAddTugas())){
+               
+               view = new AddTugasDosenView();
+               addTugas = new AddTugasDosenView();
+               addTugas.setVisible(true);
+               kelolaTugas.dispose();
+               addTugas.addListener(this);
+               
+               
+               }
+               
+           
+           }
+           else if(source.equals(kelolaTugas.getBtnPilihTugas())){
+               
+           
+           }
+       
+       }
+       
+       else if(view instanceof AddTugasDosenView){
+           if(source.equals(addTugas.getBtnBack())){
+               
+               view = new PengelolaanTugasView();
+               kelolaTugas = new PengelolaanTugasView();
+               kelolaTugas.setVisible(true);
+               addTugas.dispose();
+               kelolaTugas.addListener(this);
+               
+               
+           }
+           else if(source.equals(addTugas.getBtnSubmit())){
+               if(namaTugas.equals("")||sjumlahSoal==0||jenisTugas==0){
+                   JOptionPane.showMessageDialog(j, "Field Tidak Boleh Kosong");
+                   addTugas.addListener(this);
+               }
+               else{
+                   idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+                   apps.getDosen(currentUsername).getKelas(idx).addTugas(namaTugas);
+                   idxTugas = apps.getDosen(currentUsername).getKelas(idx).idxTugas(namaTugas);
+                   if(jenisTugas==1){
+                       apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).setMaxSoal(sjumlahSoal);
+                       apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).setIsTugasIndividu(true);
+                       
+                   }
+                   else if(jenisTugas==2){
+                       
+                       
+                       apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).setMaxSoal(sjumlahSoal);
+                       apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).setIsTugasIndividu(false);
+                   
+                   }
+                   view = new PengelolaanTugasView();
+                   kelolaTugas = new PengelolaanTugasView();
+                   kelolaTugas.setVisible(true);
+                   addTugas.dispose();
+                   System.out.println(apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getNamaTugas());
+                   System.out.println(apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getIsTugasIndividu());
+                   System.out.println(apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getMaxSoal());
+                   kelolaTugas.addListener(this);
+               
+               }
+           
+           }
+           
+           else if(source.equals(addTugas.getBtnRadioIndividu())){
+               if(addTugas.getBtnRadioIndividu().isSelected()){
+                   jenisTugas=1;
+               }
+               addTugas.addListener(this);
+               
+           }
+           
+           else if(source.equals(addTugas.getBtnRadioKelompok())){
+              if(addTugas.getBtnRadioKelompok().isSelected()){
+                   jenisTugas=2;
+               }
+              addTugas.addListener(this);
+           }
+           
+           else if(source.equals(addTugas.gettFNamaTugas())){
+               namaTugas = addTugas.gettFNamaTugas().getText();
+           }
+           else if(source.equals(addTugas.gettFJumlahSoal())){
+               
+               try{
+               sjumlahSoal = Integer.parseInt(addTugas.gettFJumlahSoal().getText()); 
+               }
+               catch(NumberFormatException ne){
+               JOptionPane.showMessageDialog(j, "Jumlah soal harus berisi angka");
+               addTugas.settFJumlahSoal("");
+               sjumlahSoal = 0;
+               
+               
+              }
+              addTugas.addListener(this);
+               
+           
+           }
+           
+           
+       
        }
        
        

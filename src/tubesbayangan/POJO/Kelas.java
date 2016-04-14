@@ -36,8 +36,8 @@ public class Kelas {
         maxKelompok = 5;
         maxMhs = 40;
         maxTugas = 20;
-        mhs = new Mahasiswa[jumlahMhs];
-        tugas = new Tugas[jumlahTugas];
+        mhs = new Mahasiswa[maxMhs];
+        tugas = new Tugas[maxMhs];
         kelompok = new Kelompok[maxKelompok];
     }
     
@@ -111,6 +111,17 @@ public class Kelas {
             }
         }
         return hasil;
+    }
+    
+    public int idxTugas(String s){
+        int hasil = -1;
+        for(int i =0; i< jumlahTugas;i++){
+            if(s.equals(tugas[i].getNamaTugas())){
+                hasil = i;
+            }
+        }
+        return hasil;
+    
     }
 
 }

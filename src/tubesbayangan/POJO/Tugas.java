@@ -24,12 +24,10 @@ public class Tugas {
         this.namaTugas = namaTugas;
         jumlahJawaban = 0;
         jumlahSoal = 0;
-        maxSoal = 20;
+        maxSoal = 0;
         statusDikerjakan = false;
         statusAssign = false;
-        soal = new String[maxSoal];
-        jawaban = new String[maxSoal];
-    }
+        }
     public String getNamaTugas() {
         return namaTugas;
     }
@@ -41,6 +39,9 @@ public class Tugas {
     }
     public void setMaxSoal(int maxSoal) {
         this.maxSoal = maxSoal;
+        soal = new String[maxSoal];
+        jawaban = new String [maxSoal];
+        
     }
     public boolean getStatusDikerjakan() {
         return statusDikerjakan;
@@ -77,6 +78,8 @@ public class Tugas {
     public String getJawaban(int n){
         return jawaban[n];
     }
+    
+    
 }
     
 
