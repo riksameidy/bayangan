@@ -13,12 +13,12 @@ import javax.swing.JToggleButton;
  *
  * @author my asus
  */
-public class MenuKelasUtamaMahasiswa extends javax.swing.JFrame implements View {
+public class MhsKelasUtamaMahasiswa extends javax.swing.JFrame implements View {
 
     /**
      * Creates new form MenuKelasUtamaMahasiswa
      */
-    public MenuKelasUtamaMahasiswa() {
+    public MhsKelasUtamaMahasiswa() {
         initComponents();
     }
 
