@@ -6,7 +6,7 @@
 package Driver;
 
 import Apps.Apps;
-import Controller.Controller;
+import Controller.Controller2;
 
 /**
  *
@@ -21,7 +21,7 @@ public class Driver {
         System.out.println(apps.getDosen("r").getUsername());
         System.out.println(apps.getDosen("r").getPassword());
         
-        Controller c = new Controller(apps);
+        Controller2 c = new Controller2(apps);
         
     }
     
