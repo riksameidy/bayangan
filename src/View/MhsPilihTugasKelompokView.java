@@ -12,12 +12,12 @@ import javax.swing.JButton;
  *
  * @author my asus
  */
-public class MhsPilihTugasIndividuView extends javax.swing.JFrame implements View {
+public class MhsPilihTugasKelompokView extends javax.swing.JFrame implements View {
 
     /**
-     * Creates new form PilihTugasIndividu
+     * Creates new form mhsPilihTugasKelompokView
      */
-    public MhsPilihTugasIndividuView() {
+    public MhsPilihTugasKelompokView() {
         initComponents();
     }
 
@@ -36,9 +36,14 @@ public class MhsPilihTugasIndividuView extends javax.swing.JFrame implements Vie
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Pilih Tugas Individu");
+        jLabel1.setText("Pilih Tugas Kelompok");
 
         btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         btnPilih.setText("Pilih");
 
@@ -49,29 +54,34 @@ public class MhsPilihTugasIndividuView extends javax.swing.JFrame implements Vie
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(143, 143, 143)
-                        .addComponent(jLabel1))
+                        .addGap(150, 150, 150)
+                        .addComponent(jLabel1)
+                        .addGap(0, 142, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
+                        .addContainerGap()
                         .addComponent(btnBack)
-                        .addGap(229, 229, 229)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnPilih)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 227, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnPilih))
-                .addGap(27, 27, 27))
+                .addGap(25, 25, 25))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -88,7 +98,6 @@ public class MhsPilihTugasIndividuView extends javax.swing.JFrame implements Vie
     public void addListener (ActionListener l){
         btnBack.addActionListener(l);
         btnPilih.addActionListener(l);
-        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

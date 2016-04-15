@@ -12,12 +12,12 @@ import javax.swing.JButton;
  *
  * @author my asus
  */
-public class MhsJawabTugasView extends javax.swing.JFrame implements View{
+public class MhsJawabTugasIndividuView extends javax.swing.JFrame implements View{
 
     /**
      * Creates new form MhsJawabTugas
      */
-    public MhsJawabTugasView() {
+    public MhsJawabTugasIndividuView() {
         initComponents();
     }
 
@@ -32,9 +32,10 @@ public class MhsJawabTugasView extends javax.swing.JFrame implements View{
 
         jLabel1 = new javax.swing.JLabel();
         labelNamaTugas = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        tFJawaban = new javax.swing.JTextField();
         btnLihatSoal = new javax.swing.JButton();
         btnSubmit = new javax.swing.JButton();
+        ComboBoxSoal = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,11 +43,13 @@ public class MhsJawabTugasView extends javax.swing.JFrame implements View{
 
         labelNamaTugas.setText("nama tugas disini");
 
-        jTextField1.setText("jTextField1");
+        tFJawaban.setText("jTextField1");
 
         btnLihatSoal.setText("Lihat Soal");
 
         btnSubmit.setText("Submit");
+
+        ComboBoxSoal.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -62,12 +65,14 @@ public class MhsJawabTugasView extends javax.swing.JFrame implements View{
                         .addComponent(labelNamaTugas))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnLihatSoal)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSubmit))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ComboBoxSoal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(btnLihatSoal)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnSubmit))
+                                .addComponent(tFJawaban, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -77,8 +82,10 @@ public class MhsJawabTugasView extends javax.swing.JFrame implements View{
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(labelNamaTugas)
-                .addGap(18, 18, 18)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addComponent(ComboBoxSoal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tFJawaban, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLihatSoal)
@@ -107,10 +114,11 @@ public class MhsJawabTugasView extends javax.swing.JFrame implements View{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> ComboBoxSoal;
     private javax.swing.JButton btnLihatSoal;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel labelNamaTugas;
+    private javax.swing.JTextField tFJawaban;
     // End of variables declaration//GEN-END:variables
 }
