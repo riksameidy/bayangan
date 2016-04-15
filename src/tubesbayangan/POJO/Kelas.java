@@ -166,6 +166,17 @@ public class Kelas {
        
         }
     }
+    
+    public int idxKelompok(int noKelompok){
+        int idx = -1;
+        for(int i=0;i<jumlahKelompok;i++){
+            if(noKelompok==kelompok[i].getNoKelompok()){
+                idx = i;
+            }
+        }
+        return idx;
+    
+    }
 
 }
 

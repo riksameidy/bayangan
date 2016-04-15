@@ -34,6 +34,14 @@ public class Kelompok {
         tugas = new Tugas[maxTugas];
     }
     
+    public Kelompok(int noKelompok, int maxAnggota){
+         this.noKelompok = noKelompok;
+         this.maxAnggota = maxAnggota;
+         anggota = new Mahasiswa[maxAnggota];
+         maxTugas = 5;
+         tugas = new Tugas[maxTugas];
+    
+    }
     
 
     public int getNoKelompok() {

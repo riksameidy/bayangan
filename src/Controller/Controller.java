@@ -9,12 +9,8 @@ import Apps.Apps;
 import View.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.event.ListSelectionListener;
-import tubesbayangan.POJO.Kelas;
+import tubesbayangan.POJO.Kelompok;
 
 /**
  *
@@ -60,6 +56,9 @@ public class Controller implements ActionListener{
     private String namaTugas;
     private int sjumlahSoal;
     
+    private int noKelompok;
+    private int JumlahKelompok;
+    
     
     
     private int status = 0; //1 jika Mhs , 2 jika Dosen;
@@ -68,6 +67,12 @@ public class Controller implements ActionListener{
     private String currentUsername;
     private String currentKodeKelas;
     private String currentTugas;
+    private int    currentNoKelompok;
+    
+    
+    private PengelolaanKelompokDosen kelolaKelompok;
+    private CreateKelompokDosen createKelompok;
+    
     
     public Controller(Apps apps){
         this.apps = apps;
@@ -86,6 +91,7 @@ public class Controller implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         int idx;
         int idxTugas;
+        int idxKelompok;
         Object source = e.getSource();
         
         
@@ -530,9 +536,17 @@ public class Controller implements ActionListener{
            else if(source.equals(kelasUtamaDosen.getBtnKelompok())){
                
                
+               
+               view = new PengelolaanKelompokDosen();
+               kelolaKelompok = new PengelolaanKelompokDosen();
+               kelolaKelompok.setVisible(true);
+               kelolaKelompok.AddListener(this);
+               kelasUtamaDosen.dispose();
            
            }
            else if(source.equals(kelasUtamaDosen.getBtnMhs())){
+               
+               
                
            
            }
@@ -824,8 +838,33 @@ public class Controller implements ActionListener{
                if(currentTugas==null){
                    JOptionPane.showMessageDialog(j,"Silahkan Pilih Tugas yang akan di edit");
                }
+               else if(currentTugas.equals("Tidak Ada Tugas")){
+                   JOptionPane.showMessageDialog(j,"Tidak ada Tugas yang dipilih");
+               }
                else{
                     
+                   String[] s;
+                   idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+                   idxTugas = apps.getDosen(currentUsername).getKelas(idx).idxTugas(currentTugas);
+                   int x = apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getMaxSoal();
+                   s = new String[x];
+                   for(int i=0;i<x;i++){
+                       s[i] = "soal "+ Integer.toString(i+1);
+                   }
+                   
+                   
+                   view = new AddSoalView();
+                   addSoal = new AddSoalView();
+                   addSoal.setVisible(true);
+                   
+                   addSoal.setComboBoxSoal(s);
+                   addSoal.setlNamaTugas(apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getNamaTugas());
+                   
+                   addSoal.addListener(this);
+                   pilTugas.dispose();
+                   
+                   
+                   
                }
            
            }
@@ -856,6 +895,7 @@ public class Controller implements ActionListener{
                idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
                idxTugas = apps.getDosen(currentUsername).getKelas(idx).idxTugas(currentTugas);
                
+               //assign to mahasiswa here
                apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).setStatusAssign(true);
                
                view = new PengelolaanTugasView();
@@ -874,11 +914,123 @@ public class Controller implements ActionListener{
                addSoal.settFshowSoal(apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).getSoal(idxCbSoal));
                addSoal.setTfInputSoal("");
                
+               
            }
            
            
            
        
+       
+       }
+       
+       else if (view instanceof PengelolaanKelompokDosen){
+           
+           if(source.equals(kelolaKelompok.getBtnCreateKelompok())){
+               
+               view = new CreateKelompokDosen();
+               createKelompok = new CreateKelompokDosen();
+               createKelompok.setVisible(true);
+               kelolaKelompok.dispose();
+               createKelompok.AddListener(this);
+               
+           }
+           else if(source.equals(kelolaKelompok.getBtnBack())){
+               view = new MenuKelasUtamaDosen();
+               kelasUtamaDosen = new MenuKelasUtamaDosen();
+               kelasUtamaDosen.setVisible(true);
+               kelolaKelompok.dispose();
+               kelasUtamaDosen.addListener(this);
+               
+           
+           }
+           else if(source.equals(kelolaKelompok.getBtnPilihKelompok())){
+           
+           
+           }
+           
+       
+       }
+       
+       else if(view instanceof CreateKelompokDosen){
+           
+           
+           
+           if(source.equals(createKelompok.getBtnSubmit())){
+               if(noKelompok<=0||JumlahKelompok<=0){
+                   JOptionPane.showMessageDialog(j, "No kelompok Harus lebih dari 0");
+                   createKelompok.AddListener(this);
+               }
+               else{
+                   
+                   idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+                   idxKelompok = apps.getDosen(currentUsername).getKelas(idx).idxKelompok(noKelompok);
+                   if(idxKelompok==-1){
+                       
+                       apps.getDosen(currentUsername).getKelas(idx).addKelompok(new Kelompok(noKelompok,JumlahKelompok));
+                       JOptionPane.showMessageDialog(j,"Kelompok Berhasil Ditambahkan");
+                       
+                       view = new PengelolaanKelompokDosen();
+                       kelolaKelompok = new PengelolaanKelompokDosen();
+                       kelolaKelompok.setVisible(true);
+                       createKelompok.dispose();
+                       kelolaKelompok.AddListener(this);
+                       
+                   }
+                   else{
+                   JOptionPane.showMessageDialog(j, "No Kelompok Sudah ada");
+                    createKelompok.AddListener(this);
+                   }
+                   
+                   
+                   
+                   
+               }
+               
+               
+           }
+           else if(source.equals(createKelompok.getBtnCancel())){
+               
+               noKelompok = 0;
+               JumlahKelompok = 0;
+               
+               view = new PengelolaanKelompokDosen();
+               kelolaKelompok = new PengelolaanKelompokDosen();
+               kelolaKelompok.setVisible(true);
+               createKelompok.dispose();
+               kelolaKelompok.AddListener(this);
+               
+               
+           }
+           
+           else if(source.equals(createKelompok.getTfNoKelompok())){
+               String sNo = createKelompok.getTfNoKelompok().getText();
+               try{
+               noKelompok = Integer.parseInt(sNo);
+               
+               }
+               catch(NumberFormatException ex){
+                   JOptionPane.showMessageDialog(j, "Haruslah Berupa Angka");
+               
+               }
+               createKelompok.AddListener(this);
+               
+               
+           }
+           
+           else if(source.equals(createKelompok.gettFJumlahAnggota())){
+           
+               String sNo = createKelompok.gettFJumlahAnggota().getText();
+               try{
+               JumlahKelompok = Integer.parseInt(sNo);
+               
+               }
+               catch(NumberFormatException ex){
+                   JOptionPane.showMessageDialog(j, "Haruslah Berupa Angka");
+               
+               }
+               createKelompok.AddListener(this);
+           
+           }
        
        }
             
