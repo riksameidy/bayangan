@@ -7,6 +7,7 @@ package View;
 
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JList;
 
 /**
  *
@@ -33,6 +34,9 @@ public class MhsPilihTugasIndividuView extends javax.swing.JFrame implements Vie
         jLabel1 = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         btnPilih = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lTugasIndividu = new javax.swing.JList<>();
+        btnViewJawaban = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -40,7 +44,16 @@ public class MhsPilihTugasIndividuView extends javax.swing.JFrame implements Vie
 
         btnBack.setText("Back");
 
-        btnPilih.setText("Pilih");
+        btnPilih.setText("Kerjakan");
+
+        lTugasIndividu.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(lTugasIndividu);
+
+        btnViewJawaban.setText("View Jawaban");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -53,20 +66,28 @@ public class MhsPilihTugasIndividuView extends javax.swing.JFrame implements Vie
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
-                        .addComponent(btnBack)
-                        .addGap(229, 229, 229)
-                        .addComponent(btnPilih)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBack)
+                                .addGap(48, 48, 48)
+                                .addComponent(btnViewJawaban)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnPilih, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
-                    .addComponent(btnPilih))
+                    .addComponent(btnPilih)
+                    .addComponent(btnViewJawaban))
                 .addGap(27, 27, 27))
         );
 
@@ -84,16 +105,35 @@ public class MhsPilihTugasIndividuView extends javax.swing.JFrame implements Vie
     public JButton getBtnPilih() {
         return btnPilih;
     }
+
+    public JList<String> getlTugasIndividu() {
+        return lTugasIndividu;
+    }
+
+    public void setlTugasIndividu(String[] s) {
+        this.lTugasIndividu.setListData(s);
+    }
+
+    public JButton getBtnViewJawaban() {
+        return btnViewJawaban;
+    }
+    
+    
+    
     
     public void addListener (ActionListener l){
         btnBack.addActionListener(l);
         btnPilih.addActionListener(l);
+        btnViewJawaban.addActionListener(l);
         
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnPilih;
+    private javax.swing.JButton btnViewJawaban;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> lTugasIndividu;
     // End of variables declaration//GEN-END:variables
 }

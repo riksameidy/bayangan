@@ -15,7 +15,9 @@ public class Mahasiswa extends Orang {
     private String jurusan;
     private int maxTugas; //default max tugas = 5
     private int jumlahTugas;
+    private int jumlahmyTugas;
     private Tugas[] tugas;
+    private Tugas[] myTugas;
     private int jumlahKelas;
     
     @Override
@@ -27,6 +29,7 @@ public class Mahasiswa extends Orang {
         this.maxTugas = 5;
         this.nim = nim;
         tugas = new Tugas[maxTugas];
+        myTugas = new Tugas[maxTugas];
         jumlahKelas = 0;
     }
     
@@ -77,6 +80,83 @@ public class Mahasiswa extends Orang {
         return jumlahKelas;
     }
     
-   
+    public String[] getAlltugas(){
+        
+        if(jumlahTugas==0){
+            return null;
+        }
+        else{
+            String temp[];
+            temp = new String[jumlahTugas];
+            for (int i = 0; i < jumlahTugas; i++) {
+                temp[i] = tugas[i].getNamaTugas();
+  
+            }
+            return temp;
+        }
+    }
+
+    public Tugas getMyTugas(int i) {
+        return myTugas[i];
+    }
+    
+    public int idxmyTugas(String namaTugas){
+        int idx = -1;
+        for (int i = 0; i < jumlahmyTugas; i++) {
+            if(namaTugas.equals(myTugas[i].getNamaTugas())){
+                idx = i;
+            }
+            
+        }
+        return idx;
+    }
+    
+    
+    public String[] getAlltugasIndividu(){
+        
+        if(jumlahTugas==0){
+            return null;
+        }
+        else{
+            String temp[] = null;
+            temp = new String[jumlahTugas];
+            for (int i = 0; i < jumlahTugas; i++) {
+                if(tugas[i].getIsTugasIndividu()){
+                temp[i] = tugas[i].getNamaTugas();
+                }
+  
+            }
+            return temp;
+        }
+    }
+    public String[] getAlltugasKelompok(){
+        
+        if(jumlahTugas==0){
+            return null;
+        }
+        else{
+            String temp[] = null;
+            temp = new String[jumlahTugas];
+            for (int i = 0; i < jumlahTugas; i++) {
+                if(!tugas[i].getIsTugasIndividu()){
+                temp[i] = tugas[i].getNamaTugas();
+                }
+  
+            }
+            return temp;
+        }
+    }
+    
+    public void createmyTugas(Tugas t){
+        
+        myTugas[jumlahmyTugas] = new Tugas(t.getNamaTugas());
+        myTugas[jumlahmyTugas].setMaxSoal(t.getMaxSoal());
+        myTugas[jumlahmyTugas].setIsTugasIndividu(t.getIsTugasIndividu());
+        for (int i = 0; i < t.getJumlahSoal(); i++) {
+            myTugas[jumlahmyTugas].addSoal(t.getSoal(i));
+        }
+        jumlahmyTugas++;
+        
+    }
     
 }

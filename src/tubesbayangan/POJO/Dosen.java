@@ -87,13 +87,8 @@ public class Dosen extends Orang {
     public Kelas getKelas(int n){
         return kelas[n];
     }
-    public void addMhsInKelompok(Mahasiswa m, int nKelas,int nKelompok){
-        kelas[nKelas].getKelompok(nKelas).addAnggota(m);
-    }
-    public void deleteMhsInKelompok(Mahasiswa m, int nKelas,int nKelompok){
-        int idx = kelas[nKelas].getKelompok(nKelas).indeksAnggota(m);
-        kelas[nKelas].getKelompok(nKelas).deleteAnggota(idx);
-    }
+    
+    
     public int idxKelas(String name){
         int idx=-1;
         for(int i=0;i<jumlahKelas;i++){
@@ -107,4 +102,15 @@ public class Dosen extends Orang {
     public int getJumlahKelas(){
         return this.jumlahKelas;
     }
+
+    public void AssignTugas(Kelas k, Tugas t){
+        t.setStatusAssign(true);
+        for (int i = 0; i < k.getJumlahMhs(); i++) {
+            
+            k.getMahasiswa(i).createmyTugas(t); 
+            k.getMahasiswa(i).addTugas(t);
+        }
+    
+    }
+
 }

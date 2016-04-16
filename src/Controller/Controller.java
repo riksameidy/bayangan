@@ -46,7 +46,7 @@ public class Controller implements ActionListener{
     private MhsKelasUtamaMahasiswa kelasUtamaMahasiswa;
     private MhsEditProfileView mhsEditProfile;
     private MhsGabungKelompokView mhsGabungKelompok;
-    private MhsJawabTugasIndividuView mhsJawabTugasIndividu;
+    private MhsViewJawabanTugas mhsViewJawaban;
     private MhsKerjakanTugasIndividuView mhsKerjakanTugasIndividu;
     private MhsLihatInfoKelompokView mhsLihatInfoKelompok;
     private MhsLihatKelompokView mhsLihatKelompok;
@@ -81,6 +81,8 @@ public class Controller implements ActionListener{
     private int noKelompok;
     private int JumlahKelompok;
     
+    private String jawaban;
+    
     
     
     private int status = 0; //1 jika Mhs , 2 jika Dosen;
@@ -91,6 +93,8 @@ public class Controller implements ActionListener{
     private String currentTugas;
     private int    currentNoKelompok;
     private String myDosen;
+    
+    private String myTugas;
     
     private long nimAdd;
     
@@ -933,8 +937,8 @@ public class Controller implements ActionListener{
                idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
                idxTugas = apps.getDosen(currentUsername).getKelas(idx).idxTugas(currentTugas);
                
-               //assign to mahasiswa here
                apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas).setStatusAssign(true);
+               apps.getDosen(currentUsername).AssignTugas(apps.getDosen(currentUsername).getKelas(idx),apps.getDosen(currentUsername).getKelas(idx).getTugas(idxTugas) );
                
                view = new PengelolaanTugasView();
                kelolaTugas = new PengelolaanTugasView();
@@ -1810,9 +1814,19 @@ public class Controller implements ActionListener{
                
                view =  new MhsPilihTugasIndividuView();
                mhsPilihTugasIndividu =  new MhsPilihTugasIndividuView();
-               mhsPilihTugasIndividu.addListener(this);
+               
                kelasUtamaMahasiswa.dispose();
+               
+               String[] temp = apps.getMhs(currentUsername).getAlltugasIndividu();
+               if(temp==null){
+                   mhsPilihTugasIndividu.setlTugasIndividu(new String[]{"None"});
+               }
+               else{
+                   mhsPilihTugasIndividu.setlTugasIndividu(temp);
+               }
+               
                mhsPilihTugasIndividu.setVisible(true);
+               mhsPilihTugasIndividu.addListener(this);
                
                
            }
@@ -1838,58 +1852,233 @@ public class Controller implements ActionListener{
            if (source.equals(mhsPilihTugasIndividu.getBtnBack())){ //mau balik lagi ke menu kelas mahasiswa
                view = new MhsKelasUtamaMahasiswa();
                kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa.setjLabel1(currentKodeKelas);
                kelasUtamaMahasiswa.addListener(this);
                mhsPilihTugasIndividu.dispose();
                kelasUtamaMahasiswa.setVisible(true);
            }
-           else if(source.equals(mhsPilihTugasIndividu.getBtnPilih())){ //mau ngerjain tugas
-               view = new MhsKerjakanTugasIndividuView();
-               mhsKerjakanTugasIndividu = new MhsKerjakanTugasIndividuView();
-               mhsKerjakanTugasIndividu.addListener(this);
+           else if(source.equals(mhsPilihTugasIndividu.getBtnViewJawaban())){
+               
+               idxTugas = apps.getMhs(currentUsername).idxmyTugas(currentTugas);
+               String[] s1; 
+               
+               if(!apps.getMhs(currentUsername).getMyTugas(idxTugas).getStatusDikerjakan()){
+                   JOptionPane.showMessageDialog(j, "Tugas Belum Dikerjakan");
+                   mhsPilihTugasIndividu.addListener(this);
+                   
+                   
+               }
+               else{
+               int x = apps.getMhs(currentUsername).getMyTugas(idxTugas).getJumlahSoal();
+        
+               view = new MhsViewJawabanTugas();
+               mhsViewJawaban = new MhsViewJawabanTugas();
+               
+                s1 = new String[x];
+                for(int i=0;i<x;i++){
+                s1[i] = "soal "+ Integer.toString(i+1);
+                }
+                
+               mhsViewJawaban.setComboBoxSoal(s1);
+               
+               
+                String soals = apps.getMhs(currentUsername).getMyTugas(idxTugas).getSoal(0);
+                                    if(soals==null){
+
+                                     mhsViewJawaban.settASoal("");
+                                    }
+                                     else{
+                                    mhsViewJawaban.settASoal(soals);
+                                    }
+
+                                    String jawabs = apps.getMhs(currentUsername).getMyTugas(idxTugas).getJawaban(0);
+
+                                    if(jawabs==null){
+                                        mhsViewJawaban.settAJawaban("Belum Dijawab");
+                                    }
+                                    else{
+                                        mhsViewJawaban.settAJawaban(jawabs);
+                                    }
+               
                mhsPilihTugasIndividu.dispose();
-               mhsKerjakanTugasIndividu.setVisible(true);
+               mhsViewJawaban.setVisible(true);
+               mhsViewJawaban.addListener(this);
+               }
+               
+           
            }
+           else if(source.equals(mhsPilihTugasIndividu.getBtnPilih())){ //mau ngerjain tugas
+               String s = mhsPilihTugasIndividu.getlTugasIndividu().getSelectedValue();
+               if(s==null){
+                   JOptionPane.showMessageDialog(j, "Silahkan Pilih Tugas");
+                   mhsPilihTugasIndividu.addListener(this);
+                }
+               else{
+                    
+                    if(s.equals("None")){
+                        JOptionPane.showMessageDialog(j, "Tidak ada Tugas Dipilih");
+                        mhsPilihTugasIndividu.addListener(this); 
+                    }
+                    
+                    else{
+                        
+                        currentTugas = s;
+                        
+                        
+                        
+                           String[] s1;
+                            
+                            idxTugas = apps.getMhs(currentUsername).idxmyTugas(currentTugas);
+                            
+                            if(idxTugas==-1){
+                                JOptionPane.showMessageDialog(j, "Tugas Masih Belum Di Assign");
+                                mhsPilihTugasIndividu.addListener(this);
+                            }
+                            else{
+                                int x = apps.getMhs(currentUsername).getMyTugas(idxTugas).getJumlahSoal();
+
+
+                                s1 = new String[x];
+                                for(int i=0;i<x;i++){
+                                    s1[i] = "soal "+ Integer.toString(i+1);
+                                }
+                        
+                                view = new MhsKerjakanTugasIndividuView();
+                                mhsKerjakanTugasIndividu = new MhsKerjakanTugasIndividuView();
+
+                                mhsKerjakanTugasIndividu.setComboBoxSoal(s1);
+                                mhsKerjakanTugasIndividu.setLabelNamaTugas(currentTugas);
+                                String soal1 = apps.getMhs(currentUsername).getMyTugas(idxTugas).getSoal(0);
+                                mhsKerjakanTugasIndividu.setTextSoal(soal1);
+                        
+                        
+                                mhsPilihTugasIndividu.dispose();
+                                mhsKerjakanTugasIndividu.setVisible(true);
+                                mhsKerjakanTugasIndividu.addListener(this);
+                            }
+                    
+                    }
+               }
+               
+           }
+       }
+       
+       else if(view instanceof MhsViewJawabanTugas){
+           int idxCb = mhsViewJawaban.getComboBoxSoal().getSelectedIndex();
+           if(source.equals(mhsViewJawaban.getBtnBack())){
+               
+               view = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
+               
+               mhsViewJawaban.dispose();
+               
+               kelasUtamaMahasiswa.setVisible(true);
+               kelasUtamaMahasiswa.addListener(this);
+               
+               
+               
+               
+           }
+           
+           else if(source.equals(mhsViewJawaban.getComboBoxSoal())){
+               
+               idxTugas = apps.getMhs(currentUsername).idxmyTugas(currentTugas);
+               
+               String soals = apps.getMhs(currentUsername).getMyTugas(idxTugas).getSoal(idxCb);
+               if(soals==null){
+                   
+               mhsViewJawaban.settASoal("");
+               }
+               else{
+               mhsViewJawaban.settASoal(soals);
+               }
+               
+               String jawabs = apps.getMhs(currentUsername).getMyTugas(idxTugas).getJawaban(idxCb);
+               
+               if(jawabs==null){
+                   mhsViewJawaban.settAJawaban("Belum Dijawab");
+               }
+               else{
+                   mhsViewJawaban.settAJawaban(jawabs);
+               }
+               
+           }
+       
        }
        
        
        
        
        else if (view instanceof MhsKerjakanTugasIndividuView){
+           
+           int idxCb = mhsKerjakanTugasIndividu.getComboBoxSoal().getSelectedIndex();
+           
            if (source.equals(mhsKerjakanTugasIndividu.getBtnBack())){ //balik lagi ke pilih tugas
                view = new MhsPilihTugasIndividuView();
                mhsPilihTugasIndividu = new MhsPilihTugasIndividuView();
-               mhsPilihTugasIndividu.addListener(this);
+               
+                 String[] temp = apps.getMhs(currentUsername).getAlltugasIndividu();
+               if(temp==null){
+                   mhsPilihTugasIndividu.setlTugasIndividu(new String[]{"None"});
+               }
+               else{
+                   mhsPilihTugasIndividu.setlTugasIndividu(temp);
+               }
+               
                mhsKerjakanTugasIndividu.dispose();
                mhsPilihTugasIndividu.setVisible(true);
+               mhsPilihTugasIndividu.addListener(this);
            }
            else if (source.equals(mhsKerjakanTugasIndividu.getBtnJawab())){ //pilih jawab tugas
-               view = new MhsJawabTugasIndividuView();
-               mhsJawabTugasIndividu = new MhsJawabTugasIndividuView();
-               mhsJawabTugasIndividu.addListener(this);
+               
+               jawaban = mhsKerjakanTugasIndividu.gettAJawab().getText();
+               idxTugas = apps.getMhs(currentUsername).idxmyTugas(currentTugas);
+               apps.getMhs(currentUsername).getMyTugas(idxTugas).addJawaban(jawaban, idxCb);
+               
+               
+           }
+           
+           else if(source.equals(mhsKerjakanTugasIndividu.getComboBoxSoal())){
+               
+               idxTugas = apps.getMhs(currentUsername).idxmyTugas(currentTugas);
+               String soal = apps.getMhs(currentUsername).getMyTugas(idxTugas).getSoal(idxCb);
+               if(soal==null){
+               mhsKerjakanTugasIndividu.setTextSoal("");
+               
+               }
+               else{
+               
+               mhsKerjakanTugasIndividu.setTextSoal(soal);
+               }
+               String jawabFix = apps.getMhs(currentUsername).getMyTugas(idxTugas).getJawaban(idxCb);
+               if(jawabFix==null){
+               mhsKerjakanTugasIndividu.settAJawab("");
+               }
+               else{
+               mhsKerjakanTugasIndividu.settAJawab(jawabFix);
+               }
+               
+           }
+           
+           else if(source.equals(mhsKerjakanTugasIndividu.getBtnSubmit())){
+               view = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
+               
+               idxTugas = apps.getMhs(currentUsername).idxmyTugas(currentTugas);
+               apps.getMhs(currentUsername).getMyTugas(idxTugas).setStatusDikerjakan(true);
+               
                mhsKerjakanTugasIndividu.dispose();
-               mhsJawabTugasIndividu.setVisible(true);
+               
+               kelasUtamaMahasiswa.setVisible(true);
+               kelasUtamaMahasiswa.addListener(this);
+               
+           
            }
        }
        
        
        
        
-       else if (view instanceof MhsJawabTugasIndividuView){
-           if(source.equals(mhsJawabTugasIndividu.getBtnLihatSoal())){ //mau liat soal nya lagi
-               view = new MhsKerjakanTugasIndividuView();
-               mhsKerjakanTugasIndividu = new MhsKerjakanTugasIndividuView();
-               mhsKerjakanTugasIndividu.addListener(this);
-               mhsJawabTugasIndividu.dispose();
-               mhsKerjakanTugasIndividu.setVisible(true);
-           }
-           else if (source.equals(mhsJawabTugasIndividu.getBtnSubmit())){ //mau submit jawabannya
-               view = new MhsKerjakanTugasIndividuView();
-               mhsKerjakanTugasIndividu = new MhsKerjakanTugasIndividuView();
-               mhsKerjakanTugasIndividu.addListener(this);
-               mhsJawabTugasIndividu.dispose();
-               mhsKerjakanTugasIndividu.setVisible(true);
-           }
-       }
        
        
        
