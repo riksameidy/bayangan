@@ -1170,9 +1170,79 @@ public class Controller implements ActionListener{
            
            }
            else if(source.equals(pilKelompokEdit.getBtnBack())){
-           
+               view = new PengelolaanKelompokDosen();
+               kelolaKelompok = new PengelolaanKelompokDosen();
+               kelolaKelompok.setVisible(true);
+               pilKelompokEdit.dispose();
+               kelolaKelompok.AddListener(this);
+               
            }
            else if(source.equals(pilKelompokEdit.getBtnSetKetua())){
+               
+              String s = pilKelompokEdit.getlAnggota().getSelectedValue();
+              if(s==null){
+                  JOptionPane.showMessageDialog(j, "silahkan pilih Mahasiswa");
+                  pilKelompokEdit.AddListener(this);
+              }
+              else{
+                  
+                  if(s.equals("None")){
+                      JOptionPane.showMessageDialog(j, "Tidak ada Mahasiswa Dipilih");
+                      pilKelompokEdit.AddListener(this);
+                  }
+                  else{
+                      int idxKetu = apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).idxAnggota(Long.parseLong(s));
+                      apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).setKetua(idxKetu);
+                      JOptionPane.showMessageDialog(j, "Berhasil");
+                      pilKelompokEdit.dispose();
+                      view = new PilihKelompokViewEdit();
+                      pilKelompokEdit = new PilihKelompokViewEdit();
+                      
+                      
+                      
+                      String ketu;
+                       
+                      
+                       pilKelompokEdit.setLabelNoKelompok(Integer.toString(currentNoKelompok));
+                       
+                       try{
+                           long s1 = apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).getKetua().getNim();
+                           ketu = Long.toString(s1);
+                       }
+                       catch(Exception ex){
+                           
+                           ketu = "None";
+                       }
+                       
+                       pilKelompokEdit.setLabelKetua(ketu);
+                       
+                       String[] listAnggota;
+                       
+                       long temps[] = null;
+                       temps = apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).getAllnimMhs();
+                       
+                       if(temps==null){
+                           pilKelompokEdit.setlAnggota(new String[]{"None"});
+                       }
+                       else{
+                           listAnggota = new String[temps.length];
+                           for (int i = 0; i < temps.length; i++) {
+                               listAnggota[i] = Long.toString(temps[i]);
+                           }
+                           
+                           pilKelompokEdit.setlAnggota(listAnggota);
+                           
+                       
+                       }
+                       nimAdd = 0;
+                      
+                      
+                      pilKelompokEdit.setVisible(true);
+                      pilKelompokEdit.AddListener(this);
+                  
+                  }
+              
+              }
                
            
            }
@@ -1454,7 +1524,10 @@ public class Controller implements ActionListener{
                    String s = viewMhs.getlMahasiswa().getSelectedValue();
                    long delNim = Long.parseLong(s);
                    int idxMhs = apps.getDosen(currentUsername).getKelas(idx).idxMhs(delNim);
+                   apps.getDosen(currentUsername).getKelas(idx).deleteMhsInKelompok(delNim);
                    apps.getDosen(currentUsername).getKelas(idx).deleteMhs(idxMhs);
+                   
+                   
                    
                    JOptionPane.showMessageDialog(j, "Berhasil Dihapus Dari Kelas");
                    

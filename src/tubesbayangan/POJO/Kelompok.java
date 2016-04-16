@@ -139,4 +139,30 @@ public class Kelompok {
         
     
     }
+    
+    public int idxAnggota(long nim){
+        int idx = -1;
+        for (int i = 0; i < jumlahAnggota; i++) {
+            if(nim==anggota[i].getNim()){
+                idx = i;
+            }
+            
+        }
+        return idx;
+    
+    }
+    
+    public void deleteKetua(){
+        ketua = null;
+    }
+
+    public int getJumlahAnggota() {
+        return jumlahAnggota;
+    }
+
+    public int getJumlahTugas() {
+        return jumlahTugas;
+    }
+    
+    
 }

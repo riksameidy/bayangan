@@ -260,6 +260,36 @@ public class Kelas {
         }
     
     }
+    
+    public Kelompok searchMhsInKelompok(long nim){
+        Kelompok k=  null;
+        for (int i = 0; i < jumlahKelompok; i++) {
+            
+            for (int j = 0; j < kelompok[i].getJumlahAnggota(); j++) {
+                if(kelompok[i].getAnggota(j).getNim()==nim){
+                    k = kelompok[i];
+                }
+            }
+            
+        }
+        return k;
+    }
+    
+    public void deleteMhsInKelompok(long nim){
+        
+        Kelompok k = searchMhsInKelompok(nim);
+        if(k!=null){
+                int idx = k.idxAnggota(nim);
+                k.deleteAnggota(idx);
+            if(nim==k.getKetua().getNim()){
+                k.deleteKetua();
+            }
+        }
+    
+    }
+    
+    
+    
 
 }
 

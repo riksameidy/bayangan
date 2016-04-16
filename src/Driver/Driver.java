@@ -20,7 +20,7 @@ public class Driver {
         apps.getMhs(1301142289).setUsername("Riksa");
         
         apps.createMhs(1301140389);
-        apps.getMhs(1301140389).setUsername("Chii ndut");
+        apps.getMhs(1301140389).setUsername("Chii");
         
         apps.createDosen(1);
         apps.getDosen(1).setUsername("r");
