@@ -43,6 +43,22 @@ public class Controller implements ActionListener{
     private PilihKelompokViewEdit pilKelompokEdit;
     
     
+    private MhsKelasUtamaMahasiswa kelasUtamaMahasiswa;
+    private MhsEditProfileView mhsEditProfile;
+    private MhsGabungKelompokView mhsGabungKelompok;
+    private MhsJawabTugasIndividuView mhsJawabTugasIndividu;
+    private MhsKerjakanTugasIndividuView mhsKerjakanTugasIndividu;
+    private MhsLihatInfoKelompokView mhsLihatInfoKelompok;
+    private MhsLihatKelompokView mhsLihatKelompok;
+    private MhsPilihKelasView mhsPilihKelas;
+    private MhsPilihKetuaKelompokView mhsPilihKetuaKelompok;
+    private MhsPilihTugasIndividuView mhsPilihTugasIndividu;
+    private MhsProfileView mhsProfile;
+    private MhsPilihTugasKelompokView mhsPilihTugasKelompok;
+    private MhsKerjakanTugasKelompokView mhsKerjakanTugasKelompok;
+    private MhsJawabTugasKelompokView mhsJawabTugasKelompok;
+    
+    
     private JOptionPane j;
     
     
@@ -139,7 +155,11 @@ public class Controller implements ActionListener{
                         else{
                             if(apps.getMhs(username).getPassword().equals(password)){
                                 login.setNotification("Login Berhasil sebagai Mahasiswa");
-                                //belom diisi
+                                view = new MahasiswaUtamaView();
+                                mahasiswaUtama = new MahasiswaUtamaView();
+                                login.dispose();
+                                mahasiswaUtama.setVisible(true);
+                                mahasiswaUtama.addListener(this);
                             }
                             else{
                                 login.setNotification("Username/Password Mahasiswa Salah");
@@ -1552,10 +1572,295 @@ public class Controller implements ActionListener{
        }
             
        
-       else if(view instanceof MahasiswaUtamaView){
-           
-       
+      //bikinan chii
+       else if(view instanceof MahasiswaUtamaView){ //menu utamanya mahasiswa abis login
+           if (source.equals(mahasiswaUtama.getBtnProfile())){ //mau liat profil mahasiswa
+               view = new MhsProfileView();
+               mhsProfile = new MhsProfileView();
+               mhsProfile.addListener(this);
+               mahasiswaUtama.dispose();
+               mhsProfile.setVisible(true);
+           }
+           else if (source.equals(mahasiswaUtama.getBtnKelas())){ //mau milih kelas
+               view = new MhsPilihKelasView();
+               mhsPilihKelas = new MhsPilihKelasView();
+               mhsPilihKelas.addListener(this);
+               mahasiswaUtama.dispose();
+               mhsPilihKelas.setVisible(true);
+            }
+           else if (source.equals(mahasiswaUtama.getBtnLogout())){ //mau balik lagi ke login
+               view =  new LoginView();
+               login = new LoginView();
+               login.addListener(this);
+               mahasiswaUtama.dispose();
+               currentUsername= "";
+               password = "";
+               login.setVisible(true);
+           }
        }
+       
+       else if(view instanceof MhsProfileView){ //tampil info profil mahasiswa
+           if (source.equals(mhsProfile.getBtnEditProfil())){ //mau edit profil mahasiswa
+               view = new MhsEditProfileView();
+               mhsEditProfile = new MhsEditProfileView();
+               mhsEditProfile.addListener(this);
+               mhsProfile.dispose();
+               mhsEditProfile.setVisible(true);
+           }
+           
+           else if (source.equals(mhsProfile.getBtnBack())){ //mau balik lagi ke menu utama mahasiswa
+               view = new MahasiswaUtamaView();
+               mahasiswaUtama = new MahasiswaUtamaView();
+               mahasiswaUtama.addListener(this);
+               mhsProfile.dispose();
+               mahasiswaUtama.setVisible(true);
+           }
+           
+       }
+       
+       else if(view instanceof MhsEditProfileView){ //mau edit si profilnya
+           if (source.equals(mhsEditProfile.getBtnSubmit())){ //mau simpan data profil yang abis diedit
+               view = new MhsProfileView();
+               mhsProfile = new MhsProfileView();
+               mhsProfile.addListener(this);
+               mhsEditProfile.dispose();
+               mhsProfile.setVisible(true);
+           }
+           
+           else if (source.equals(mhsEditProfile.getBtnBack())){ //balik lagi ke profil, gajadi edit profilnya
+               view = new MhsProfileView();
+               mhsProfile = new MhsProfileView();
+               mhsProfile.addListener(this);
+               mhsEditProfile.dispose();
+               mhsProfile.setVisible(true);
+           }
+       }
+       
+       else if(view instanceof MhsPilihKelasView){ //mau pilih kelas mahasiswa
+           if (source.equals(mhsPilihKelas.getBtnPilih())){ //masuk ke kelas utama mahasiswa
+               view = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa.addListener(this);
+               mhsPilihKelas.dispose();
+               kelasUtamaMahasiswa.setVisible(true);
+           }
+           else if (source.equals(mhsPilihKelas.getBtnBack())){ //gajadi pilih kelas, balik ke menu utama mahasiswa
+               view = new MahasiswaUtamaView();
+               mahasiswaUtama = new MahasiswaUtamaView();
+               mahasiswaUtama.addListener(this);
+               mhsPilihKelas.dispose();
+               mahasiswaUtama.setVisible(true);
+           }
+       }
+       
+       else if(view instanceof MhsKelasUtamaMahasiswa){ //di menu kelas nya mahasiswa
+           if (source.equals(kelasUtamaMahasiswa.getBtnBack())){ //balik ke menu pilih kelas
+               view = new MhsPilihKelasView();
+               mhsPilihKelas = new MhsPilihKelasView();
+               mhsPilihKelas.addListener(this);
+               kelasUtamaMahasiswa.dispose();
+               mhsPilihKelas.setVisible(true);
+           }
+           else if (source.equals(kelasUtamaMahasiswa.getBtnPilihTugas())){ //mau liat list tugas dan pilih tugas
+               view =  new MhsPilihTugasIndividuView();
+               mhsPilihTugasIndividu =  new MhsPilihTugasIndividuView();
+               mhsPilihTugasIndividu.addListener(this);
+               kelasUtamaMahasiswa.dispose();
+               mhsPilihTugasIndividu.setVisible(true);
+           }
+           else if (source.equals(kelasUtamaMahasiswa.getBtnGabungKelompok())){ //mau liat list kelompok dan gabung
+               view = new MhsGabungKelompokView();
+               mhsGabungKelompok = new MhsGabungKelompokView();
+               mhsGabungKelompok.addListener(this);
+               kelasUtamaMahasiswa.dispose();
+               mhsGabungKelompok.setVisible(true);
+           }
+           else if (source.equals(kelasUtamaMahasiswa.getBtnKelolaKelompok())){ //mau liat dan kelola kelompok
+               view = new MhsLihatKelompokView();
+               mhsLihatKelompok = new MhsLihatKelompokView();
+               mhsLihatKelompok.addListener(this);
+               kelasUtamaMahasiswa.dispose();
+               mhsLihatKelompok.setVisible(true);
+           }
+       }
+       
+       else if (view instanceof MhsPilihTugasIndividuView){
+           if (source.equals(mhsPilihTugasIndividu.getBtnBack())){ //mau balik lagi ke menu kelas mahasiswa
+               view = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa.addListener(this);
+               mhsPilihTugasIndividu.dispose();
+               kelasUtamaMahasiswa.setVisible(true);
+           }
+           else if(source.equals(mhsPilihTugasIndividu.getBtnPilih())){ //mau ngerjain tugas
+               view = new MhsKerjakanTugasIndividuView();
+               mhsKerjakanTugasIndividu = new MhsKerjakanTugasIndividuView();
+               mhsKerjakanTugasIndividu.addListener(this);
+               mhsPilihTugasIndividu.dispose();
+               mhsKerjakanTugasIndividu.setVisible(true);
+           }
+       }
+       
+       else if (view instanceof MhsKerjakanTugasIndividuView){
+           if (source.equals(mhsKerjakanTugasIndividu.getBtnBack())){ //balik lagi ke pilih tugas
+               view = new MhsPilihTugasIndividuView();
+               mhsPilihTugasIndividu = new MhsPilihTugasIndividuView();
+               mhsPilihTugasIndividu.addListener(this);
+               mhsKerjakanTugasIndividu.dispose();
+               mhsPilihTugasIndividu.setVisible(true);
+           }
+           else if (source.equals(mhsKerjakanTugasIndividu.getBtnJawab())){ //pilih jawab tugas
+               view = new MhsJawabTugasIndividuView();
+               mhsJawabTugasIndividu = new MhsJawabTugasIndividuView();
+               mhsJawabTugasIndividu.addListener(this);
+               mhsKerjakanTugasIndividu.dispose();
+               mhsJawabTugasIndividu.setVisible(true);
+           }
+       }
+       
+       else if (view instanceof MhsJawabTugasIndividuView){
+           if(source.equals(mhsJawabTugasIndividu.getBtnLihatSoal())){ //mau liat soal nya lagi
+               view = new MhsKerjakanTugasIndividuView();
+               mhsKerjakanTugasIndividu = new MhsKerjakanTugasIndividuView();
+               mhsKerjakanTugasIndividu.addListener(this);
+               mhsJawabTugasIndividu.dispose();
+               mhsKerjakanTugasIndividu.setVisible(true);
+           }
+           else if (source.equals(mhsJawabTugasIndividu.getBtnSubmit())){ //mau submit jawabannya
+               view = new MhsKerjakanTugasIndividuView();
+               mhsKerjakanTugasIndividu = new MhsKerjakanTugasIndividuView();
+               mhsKerjakanTugasIndividu.addListener(this);
+               mhsJawabTugasIndividu.dispose();
+               mhsKerjakanTugasIndividu.setVisible(true);
+           }
+       }
+       
+       else if (view instanceof MhsGabungKelompokView){
+           if (source.equals(mhsGabungKelompok.getBtnCancel())){ //gajadi gabung kelompoknya
+               view = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa.addListener(this);
+               mhsGabungKelompok.dispose();
+               kelasUtamaMahasiswa.setVisible(true);
+           }
+           else if (source.equals(mhsGabungKelompok.getBtnGabung())){ //mau gabung ke kelompok yang dipilih
+               view = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa.addListener(this);
+               mhsGabungKelompok.dispose();
+               kelasUtamaMahasiswa.setVisible(true);
+           }
+               
+       }
+       
+       else if (view instanceof MhsLihatKelompokView){
+           if(source.equals(mhsLihatKelompok.getBtnBack())){ //mau balik lagi ke 
+               view = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
+               kelasUtamaMahasiswa.addListener(this);
+               mhsLihatKelompok.dispose();
+               kelasUtamaMahasiswa.setVisible(true);
+           }
+           else if(source.equals(mhsLihatKelompok.getBtnInfoKelompok())){ //mau liat info kelompok
+               view =  new MhsLihatInfoKelompokView();
+               mhsLihatInfoKelompok =  new MhsLihatInfoKelompokView();
+               mhsLihatInfoKelompok.addListener(this);
+               mhsLihatKelompok.dispose();
+               mhsLihatInfoKelompok.setVisible(true);
+           }
+           else if(source.equals(mhsLihatKelompok.getBtnPilihKetua())){ //mau pilih ketua kelompok
+               view = new MhsPilihKetuaKelompokView();
+               mhsPilihKetuaKelompok = new MhsPilihKetuaKelompokView();
+               mhsPilihKetuaKelompok.addListener(this);
+               mhsLihatKelompok.dispose();
+               mhsPilihKetuaKelompok.setVisible(true);
+           }
+           else if(source.equals(mhsLihatKelompok.getBtnTugasKelompok())){ //mau liat tugas kelompoknya
+               view = new MhsPilihTugasKelompokView();
+               mhsPilihTugasKelompok = new MhsPilihTugasKelompokView();
+               mhsPilihTugasKelompok.addListener(this);
+               mhsLihatKelompok.dispose();
+               mhsPilihTugasKelompok.setVisible(true);
+           }
+       }
+       
+       else if (view instanceof MhsPilihTugasKelompokView){
+           if (source.equals(mhsPilihTugasKelompok.getBtnBack())){ //balik lagi ke liat list tugasnya
+               view = new MhsLihatKelompokView();
+               mhsLihatKelompok = new MhsLihatKelompokView();
+               mhsLihatKelompok.addListener(this);
+               mhsPilihTugasKelompok.dispose();
+               mhsLihatKelompok.setVisible(true);
+           }
+           else if (source.equals(mhsPilihTugasKelompok.getBtnPilih())){ //pilih mau ngerjain tugas
+               view = new MhsKerjakanTugasKelompokView();
+               mhsKerjakanTugasKelompok = new MhsKerjakanTugasKelompokView();
+               mhsKerjakanTugasKelompok.addListener(this);
+               mhsPilihTugasKelompok.dispose();
+               mhsKerjakanTugasKelompok.setVisible(true);
+           }
+           
+       }
+       
+       else if (view instanceof MhsKerjakanTugasKelompokView){
+           if(source.equals(mhsKerjakanTugasKelompok.getBtnBack())){ //balik lagi ke list pilih tugas
+               view = new MhsPilihTugasKelompokView();
+               mhsPilihTugasKelompok = new MhsPilihTugasKelompokView();
+               mhsPilihTugasKelompok.addListener(this);
+               mhsKerjakanTugasKelompok.dispose();
+               mhsPilihTugasKelompok.setVisible(true);
+           }
+           else if(source.equals(mhsKerjakanTugasKelompok.getBtnJawab())){ //mau jawab soal nya
+               view = new MhsJawabTugasKelompokView();
+               mhsJawabTugasKelompok = new MhsJawabTugasKelompokView();
+               mhsJawabTugasKelompok.addListener(this);
+               mhsKerjakanTugasKelompok.dispose();
+               mhsJawabTugasKelompok.setVisible(true);
+           }
+       }
+       
+       else if (view instanceof MhsJawabTugasKelompokView){
+           if(source.equals(mhsJawabTugasKelompok.getBtnLihatSoal())){ //mau liat soalnya
+               view = new MhsKerjakanTugasKelompokView();
+               mhsKerjakanTugasKelompok = new MhsKerjakanTugasKelompokView();
+               mhsKerjakanTugasKelompok.addListener(this);
+               mhsJawabTugasKelompok.dispose();
+               mhsKerjakanTugasKelompok.setVisible(true);
+           }
+           else if (source.equals(mhsJawabTugasKelompok.getBtnSubmit())){ //submit jawabannya
+               view = new MhsKerjakanTugasKelompokView();
+               mhsKerjakanTugasKelompok = new MhsKerjakanTugasKelompokView();
+               mhsKerjakanTugasKelompok.addListener(this);
+               mhsJawabTugasKelompok.dispose();
+               mhsKerjakanTugasKelompok.setVisible(true);
+           }
+       }
+       else if (view instanceof MhsLihatInfoKelompokView){
+            if(source.equals(mhsLihatInfoKelompok.getBtnBack())){ //balik lagi ke lihat kelompok
+                view = new MhsLihatKelompokView();
+                mhsLihatKelompok = new MhsLihatKelompokView();
+                mhsLihatKelompok.addListener(this);
+                mhsLihatInfoKelompok.dispose();
+                mhsLihatKelompok.setVisible(true);
+        }
+    }
+       else if (view instanceof MhsPilihKetuaKelompokView){
+           if(source.equals(mhsPilihKetuaKelompok.getBtnCancel())){ //balik lagi ke lihat kelompok
+               view = new MhsLihatKelompokView();
+               mhsLihatKelompok = new MhsLihatKelompokView();
+               mhsLihatKelompok.addListener(this);
+               mhsPilihKetuaKelompok.dispose();
+               mhsLihatKelompok.setVisible(true);
+           }
+           else if(source.equals(mhsPilihKetuaKelompok.getBtnPilih())){ //pilih ketua kelompok dari list anggota
+               view = new MhsLihatInfoKelompokView();
+               mhsLihatInfoKelompok = new MhsLihatInfoKelompokView();
+               mhsLihatInfoKelompok.addListener(this);
+               mhsPilihKetuaKelompok.dispose();
+               mhsLihatInfoKelompok.setVisible(true);
+           }
+       }  
+
     }
     
     
