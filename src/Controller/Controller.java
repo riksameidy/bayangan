@@ -9,6 +9,7 @@ import Apps.Apps;
 import View.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javafx.scene.text.Text;
 import javax.swing.JOptionPane;
 import tubesbayangan.POJO.Kelompok;
 
@@ -35,6 +36,11 @@ public class Controller implements ActionListener{
     private AddTugasDosenView addTugas;
     private PilihTugasDosen pilTugas;
     private AddSoalView addSoal;
+    private PengelolaanMahasiswa kelolaMhs;
+    private AddMahasiswaView addMhs;
+    private ViewMahasiswaKelas viewMhs;
+    private PilihKelompokView pilKelompok;
+    private PilihKelompokViewEdit pilKelompokEdit;
     
     
     private JOptionPane j;
@@ -68,6 +74,8 @@ public class Controller implements ActionListener{
     private String currentKodeKelas;
     private String currentTugas;
     private int    currentNoKelompok;
+    
+    private long nimAdd;
     
     
     private PengelolaanKelompokDosen kelolaKelompok;
@@ -546,8 +554,11 @@ public class Controller implements ActionListener{
            }
            else if(source.equals(kelasUtamaDosen.getBtnMhs())){
                
-               
-               
+               view = new PengelolaanMahasiswa();
+               kelolaMhs = new PengelolaanMahasiswa();
+               kelolaMhs.setVisible(true);
+               kelolaMhs.AddListener(this);
+               kelasUtamaDosen.dispose();
            
            }
            else if(source.equals(kelasUtamaDosen.getBtnTugas())){
@@ -944,12 +955,168 @@ public class Controller implements ActionListener{
            
            }
            else if(source.equals(kelolaKelompok.getBtnPilihKelompok())){
-           
+               
+               view = new PilihKelompokView();
+               pilKelompok = new PilihKelompokView();
+               
+               int[] kel;
+               kel = apps.getDosen(currentUsername).getKelas(apps.getDosen(currentUsername).idxKelas(currentKodeKelas)).getAllKelompok();
+               int jum = apps.getDosen(currentUsername).getKelas(apps.getDosen(currentUsername).idxKelas(currentKodeKelas)).getJumlahKelompok();
+               if(jum==0){
+                   pilKelompok.setlKelompok(new String[]{"Tidak ada"});
+               }
+               else{
+                   String[] s = new String[jum];
+                   for (int i = 0; i < s.length; i++) {
+                       s[i] = Integer.toString(kel[i]);
+                       
+                   }
+                   pilKelompok.setlKelompok(s);
+               }
+               
+               
+               pilKelompok.setVisible(true);
+               pilKelompok.addListener(this);
+               kelolaKelompok.dispose();
            
            }
            
        
        }
+       
+       else if(view instanceof PilihKelompokView){
+       
+           if (source.equals(pilKelompok.getBtnBack())){
+               
+               view = new PengelolaanKelompokDosen();
+               kelolaKelompok = new PengelolaanKelompokDosen();
+               kelolaKelompok.setVisible(true);
+               pilKelompok.dispose();
+               kelolaKelompok.AddListener(this);
+               
+           }
+           else if(source.equals(pilKelompok.getBtnDelete())){
+               if(pilKelompok.getlKelompok().getSelectedValue().equals("Tidak ada")){
+                   
+                   pilKelompok.addListener(this);
+                   
+               }
+               else{
+                   String s = pilKelompok.getlKelompok().getSelectedValue();
+                   int x = Integer.parseInt(s);
+                   int idxMhs = apps.getDosen(currentUsername).getKelas(apps.getDosen(currentUsername).idxKelas(currentKodeKelas)).idxKelompok(x);
+                   apps.getDosen(currentUsername).getKelas(apps.getDosen(currentUsername).idxKelas(currentKodeKelas)).deleteKelompok(idxMhs);
+                   
+                   JOptionPane.showMessageDialog(j, "Mahasiswa Telah Dihapus");
+                   
+                   view = new PengelolaanKelompokDosen();
+                   kelolaKelompok = new PengelolaanKelompokDosen();
+                   kelolaKelompok.setVisible(true);
+                   kelolaKelompok.AddListener(this);
+                   pilKelompok.dispose();
+                   
+                   
+                   
+               }
+               
+           
+           }
+           else if(source.equals(pilKelompok.getBtnPilih())){
+               
+               String s = pilKelompok.getlKelompok().getSelectedValue();
+               
+               if(s==null){
+                   JOptionPane.showMessageDialog(j, "Silahkan Pilih Kelompok");
+                       pilKelompok.addListener(this);
+               }
+               
+               else{
+                   if(s.equals("Tidak ada")){
+                   JOptionPane.showMessageDialog(j, "Tidak ada Kelompok yang dipilih");
+                       pilKelompok.addListener(this);
+                   }
+                   else{
+                       
+                       view = new PilihKelompokViewEdit();
+                       pilKelompokEdit = new PilihKelompokViewEdit();
+                       pilKelompokEdit.setVisible(true);
+                       pilKelompok.dispose();
+                       pilKelompokEdit.AddListener(this);
+                       
+                       //inisiasi label + list Anggota
+                       idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+                       idxKelompok = apps.getDosen(currentUsername).getKelas(idx).idxKelompok(Integer.parseInt(s));
+                       
+                       String ketu;
+                       
+                       noKelompok = apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).getNoKelompok();
+                       pilKelompokEdit.setLabelNoKelompok(Integer.toString(noKelompok));
+                       
+                       try{
+                           long s1 = apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).getKetua().getNim();
+                           ketu = Long.toString(s1);
+                       }
+                       catch(Exception ex){
+                           
+                           ketu = "None";
+                       }
+                       
+                       pilKelompokEdit.setLabelKetua(ketu);
+                       
+                       String[] listAnggota;
+                       
+                       long temps[];
+                       temps = apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).getAllnimMhs();
+                       if(temps==null){
+                           pilKelompokEdit.setlAnggota(new String[]{"None"});
+                       }
+                       else{
+                           listAnggota = new String[temps.length];
+                           for (int i = 0; i < temps.length; i++) {
+                               listAnggota[i] = Long.toString(temps[i]);
+                           }
+                           
+                           pilKelompokEdit.setlAnggota(listAnggota);
+                           
+                       
+                       }
+                       
+                       
+                       
+                       
+                       
+                       
+                   
+                   }
+                   
+               }
+           
+           }
+           
+       
+       
+       
+       }
+       else if(view instanceof PilihKelompokViewEdit){
+           
+           if(source.equals(pilKelompokEdit.getBtnAddMhs())){
+               
+           
+           }
+           else if(source.equals(pilKelompokEdit.getBtnBack())){
+           
+           }
+           else if(source.equals(pilKelompokEdit.getBtnSetKetua())){
+           
+           
+           }
+           
+           else if(source.equals(pilKelompokEdit.getTfNim())){
+           
+           
+           }
+       }
+       
        
        else if(view instanceof CreateKelompokDosen){
            
@@ -1034,7 +1201,175 @@ public class Controller implements ActionListener{
        
        }
        
-      
+       else if(view instanceof PengelolaanMahasiswa){
+           
+           if(source.equals(kelolaMhs.getBtnAdd())){
+               view = new AddMahasiswaView();
+               addMhs = new AddMahasiswaView();
+               addMhs.setVisible(true);
+               kelolaMhs.dispose();
+               addMhs.addListener(this);
+           
+           }
+           else if(source.equals(kelolaMhs.getBtnView())){
+               
+               view = new ViewMahasiswaKelas();
+               viewMhs = new ViewMahasiswaKelas();
+               kelolaMhs.dispose();
+               
+               long[] tempss;
+               idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+               tempss = apps.getDosen(currentUsername).getKelas(idx).getAllnim();
+               if(tempss==null){
+                   String[] s = new String[1];
+                   s[0] = "Tidak ada Mahasiswa Dalam Kelas";
+                   viewMhs.setlMahasiswa(s);
+                   
+               }
+               else{
+                   String[] s = new String[tempss.length];
+                   for (int i = 0; i < s.length; i++) {
+                        s[i] = Long.toString(tempss[i]);
+                   }
+                   viewMhs.setlMahasiswa(s);
+                    
+                   
+               }
+               
+               viewMhs.setVisible(true);
+               viewMhs.AddListener(this);
+               
+           
+           }
+           
+           else if(source.equals(kelolaMhs.getBtnBack())){
+           
+               view = new MenuKelasUtamaDosen();
+               kelasUtamaDosen = new MenuKelasUtamaDosen();
+               kelasUtamaDosen.setVisible(true);
+               kelolaMhs.dispose();
+               kelasUtamaDosen.addListener(this);
+           
+           }
+           
+       
+       }
+       
+       else if(view instanceof AddMahasiswaView){
+           if(source.equals(addMhs.getBtnAdd())){
+               int idxNim = apps.searchMhs(nimAdd);
+               if(idxNim==-1){
+                   JOptionPane.showMessageDialog(j, "NIM Mahasiswa Tidak ada");
+                   
+               }
+               else{
+                   
+                   
+                   idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+                   
+                   if(apps.getDosen(currentUsername).getKelas(idx).getJumlahMhs()< apps.getDosen(currentUsername).getKelas(idx).getMaxMhs()){
+                   
+                        if(apps.getDosen(currentUsername).getKelas(idx).idxMhs(nimAdd)!=-1){
+                            
+                        JOptionPane.showMessageDialog(j, "Mhs Sudah ada dalam Kelas");
+                        
+                        }
+                        else{
+                       
+                        apps.getDosen(currentUsername).getKelas(idx).addMahasiswa(apps.getMhs(nimAdd)); 
+                        JOptionPane.showMessageDialog(j, "Berhasil Ditambahkan");
+                        
+                        view = new PengelolaanMahasiswa();
+                        kelolaMhs  = new PengelolaanMahasiswa();
+                        kelolaMhs.setVisible(true);
+                        kelolaMhs.AddListener(this);
+                        addMhs.dispose();
+                        }
+                   }
+                   else{
+                        JOptionPane.showMessageDialog(j, "Kelas sudah Penuh ");
+                        addMhs.addListener(this);
+                   }
+                   
+                   
+                   
+                   
+               }
+           }
+           else if(source.equals(addMhs.getBtnBack())){
+               
+               view = new PengelolaanMahasiswa();
+               kelolaMhs  = new PengelolaanMahasiswa();
+               kelolaMhs.setVisible(true);
+               kelolaMhs.AddListener(this);
+               addMhs.dispose();
+               
+           }
+           
+           else if(source.equals(addMhs.getTfNIM())){
+               
+               String temps = addMhs.getTfNIM().getText(); 
+               try{
+                   nimAdd = Long.parseLong(temps);
+                   
+               }
+               catch(NumberFormatException ex){
+                   JOptionPane.showMessageDialog(j, "NIM Haruslah berupa Angka");
+                   addMhs.addListener(this);
+               }
+           
+           }
+           
+           
+       }
+       
+       else if(view instanceof ViewMahasiswaKelas){
+           if(source.equals(viewMhs.getBtnBack())){
+               
+               view = new PengelolaanMahasiswa();
+               kelolaMhs = new PengelolaanMahasiswa();
+               kelolaMhs.setVisible(true);
+               viewMhs.dispose();
+               kelolaMhs.AddListener(this);
+               
+           }
+           
+           else if(source.equals(viewMhs.getBtnDelete())){
+               
+               if(viewMhs.getlMahasiswa().getSelectedValue().equals("Tidak ada Mahasiswa Dalam Kelas")){
+                   JOptionPane.showMessageDialog(j, "Tidak ada Mahasiswa yang dipilih");
+                   viewMhs.AddListener(this);
+                   
+                   
+               }
+               else{
+                   idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+                   String s = viewMhs.getlMahasiswa().getSelectedValue();
+                   long delNim = Long.parseLong(s);
+                   int idxMhs = apps.getDosen(currentUsername).getKelas(idx).idxMhs(delNim);
+                   apps.getDosen(currentUsername).getKelas(idx).deleteMhs(idxMhs);
+                   
+                   JOptionPane.showMessageDialog(j, "Berhasil Dihapus Dari Kelas");
+                   
+                   view = new PengelolaanMahasiswa();
+                   kelolaMhs = new PengelolaanMahasiswa();
+                   kelolaMhs.setVisible(true);
+                   
+                   viewMhs.dispose();
+                   
+                   kelolaMhs.AddListener(this);
+                   
+                   
+                   
+                   
+               
+               }
+               
+               
+           
+           }
+       
+       }
             
        
        else if(view instanceof MahasiswaUtamaView){

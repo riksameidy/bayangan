@@ -110,13 +110,33 @@ public class Kelompok {
             }
             else if(jumlahAnggota==1){
                 anggota[n]=null;
+                jumlahAnggota--;
              }
             else{
                 anggota[n]= null;
                 for(int i=n;i<jumlahAnggota-1;i++){
                     anggota[i] = anggota[i+1];
                 }
+                anggota[jumlahAnggota-1] = null;
+                jumlahAnggota--;
             }
         }
+    }
+    
+    public long[] getAllnimMhs(){
+        long[] temp;
+        if(jumlahAnggota==0){
+            return null;
+        }
+        else{
+        temp = new long[jumlahAnggota];
+            for (int i = 0; i < jumlahAnggota; i++) {
+                temp[i] = anggota[i].getNim(); 
+            }
+            return temp;
+        }
+        
+        
+    
     }
 }

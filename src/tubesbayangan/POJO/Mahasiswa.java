@@ -63,5 +63,6 @@ public class Mahasiswa extends Orang {
         tugas[t].setStatusDikerjakan(true);
     }
     
+   
     
 }

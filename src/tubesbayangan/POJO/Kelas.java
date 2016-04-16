@@ -177,6 +177,89 @@ public class Kelas {
         return idx;
     
     }
+    
+    public int idxMhs(long nim){
+        int idx = -1;
+        for(int i=0;i<jumlahMhs;i++){
+            if(nim==mhs[i].getNim()){
+                idx = i;
+            }
+        }
+        return idx;
+    
+    
+    }
+    
+    public long[] getAllnim(){
+        long[] temp;
+        if(jumlahMhs==0){
+            return null;
+        }
+        else{
+            temp = new long[jumlahMhs];
+            for (int i = 0; i < jumlahMhs; i++) {
+                temp[i] = mhs[i].getNim();
+            }
+            return temp;
+        }
+    
+    }
+    
+    public void deleteMhs(int n){
+    if(jumlahMhs>0){
+            if(n==jumlahMhs-1){
+                mhs[n] = null;
+                jumlahMhs--;
+            }
+            else if(jumlahMhs==1){
+                mhs[n]=null;
+                jumlahMhs--;
+             }
+            else{
+                mhs[n]= null;
+                for(int i=n;i<jumlahMhs-1;i++){
+                    mhs[i] = mhs[i+1];
+                }
+                mhs[jumlahMhs-1] = null;
+                jumlahMhs--;
+            }
+        }
+    }
+    public void deleteKelompok(int n){
+    if(jumlahKelompok>0){
+            if(n==jumlahKelompok-1){
+                kelompok[n] = null;
+                jumlahKelompok--;
+            }
+            else if(jumlahKelompok==1){
+                kelompok[n]=null;
+                jumlahKelompok--;
+             }
+            else{
+                kelompok[n]= null;
+                for(int i=n;i<jumlahKelompok-1;i++){
+                    kelompok[i] = kelompok[i+1];
+                }
+                kelompok[jumlahKelompok-1] = null;
+                jumlahKelompok--;
+            }
+        }
+    }
+    
+    public int[] getAllKelompok(){
+        int[] temp;
+        if(jumlahKelompok==0){
+            return null;
+        }
+        else{
+            temp = new int[jumlahKelompok];
+            for (int i = 0; i < jumlahKelompok; i++) {
+                temp[i] = kelompok[i].getNoKelompok();
+            }
+            return temp;
+        }
+    
+    }
 
 }
 
