@@ -7,6 +7,7 @@ package View;
 
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 
 /**
@@ -106,6 +107,11 @@ public class MhsKelasUtamaMahasiswa extends javax.swing.JFrame implements View {
     public JButton getBtnPilihTugas() {
         return btnPilihTugas;
     }
+
+    public void setjLabel1(String s) {
+        this.jLabel1.setText(s);
+    }
+    
     
     public void addListener (ActionListener l){
         btnBack.addActionListener(l);

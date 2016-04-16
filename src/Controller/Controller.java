@@ -1758,6 +1758,7 @@ public class Controller implements ActionListener{
                     
                     currentKodeKelas = s;
                     myDosen = apps.getDosenbyKelas(currentKodeKelas).getUsername();
+                    kelasUtamaMahasiswa.setjLabel1(currentKodeKelas);
                     
     
                     mhsPilihKelas.dispose();
