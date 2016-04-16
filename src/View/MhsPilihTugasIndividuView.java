@@ -136,4 +136,6 @@ public class MhsPilihTugasIndividuView extends javax.swing.JFrame implements Vie
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> lTugasIndividu;
     // End of variables declaration//GEN-END:variables
+
+
 }

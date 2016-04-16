@@ -47,6 +47,17 @@ public class Apps {
     
     }
     
+    public boolean searchMhsinKelompok(Kelompok k, long nim){
+        boolean found = false;
+        for (int i = 0; i < k.getJumlahAnggota(); i++) {
+            if(k.getAnggota(i).getNim()==nim){
+                found = true;
+            }
+            
+        }
+        return found;
+    }
+    
     public Dosen getDosenbyKelas(String kodeKelas){
         Dosen dos = null;
         

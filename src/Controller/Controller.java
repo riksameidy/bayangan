@@ -10,6 +10,7 @@ import View.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import tubesbayangan.POJO.Kelas;
 import tubesbayangan.POJO.Kelompok;
 import tubesbayangan.POJO.Mahasiswa;
 
@@ -56,7 +57,7 @@ public class Controller implements ActionListener{
     private MhsProfileView mhsProfile;
     private MhsPilihTugasKelompokView mhsPilihTugasKelompok;
     private MhsKerjakanTugasKelompokView mhsKerjakanTugasKelompok;
-    private MhsJawabTugasKelompokView mhsJawabTugasKelompok;
+    
     
     
     private JOptionPane j;
@@ -1831,18 +1832,49 @@ public class Controller implements ActionListener{
                
            }
            else if (source.equals(kelasUtamaMahasiswa.getBtnGabungKelompok())){ //mau liat list kelompok dan gabung
-               view = new MhsGabungKelompokView();
-               mhsGabungKelompok = new MhsGabungKelompokView();
-               mhsGabungKelompok.addListener(this);
-               kelasUtamaMahasiswa.dispose();
-               mhsGabungKelompok.setVisible(true);
+               
+               Kelas k = apps.getDosen(myDosen).getKelas(apps.getDosen(myDosen).idxKelas(currentKodeKelas));
+               boolean ada = false;
+               
+               for (int i = 0; i <k.getJumlahKelompok() ; i++) {
+                   ada = apps.searchMhsinKelompok(k.getKelompok(i), apps.getMhs(currentUsername).getNim());
+               }
+               
+               if(ada){
+                
+                   JOptionPane.showMessageDialog(j, "Sudah bergabung Di Kelompok");
+                   kelasUtamaMahasiswa.addListener(this);
+               }
+               else{
+               
+                 view = new MhsGabungKelompokView();
+                 mhsGabungKelompok = new MhsGabungKelompokView();
+                 mhsGabungKelompok.addListener(this);
+                 kelasUtamaMahasiswa.dispose();
+                 mhsGabungKelompok.setVisible(true);
+               }
+               
            }
            else if (source.equals(kelasUtamaMahasiswa.getBtnKelolaKelompok())){ //mau liat dan kelola kelompok
+               Kelas k = apps.getDosen(myDosen).getKelas(apps.getDosen(myDosen).idxKelas(currentKodeKelas));
+               boolean ada = false;
+               
+               for (int i = 0; i <k.getJumlahKelompok() ; i++) {
+                   ada = apps.searchMhsinKelompok(k.getKelompok(i), apps.getMhs(currentUsername).getNim());
+               }
+               
+               if(ada){
+               
                view = new MhsLihatKelompokView();
                mhsLihatKelompok = new MhsLihatKelompokView();
                mhsLihatKelompok.addListener(this);
                kelasUtamaMahasiswa.dispose();
                mhsLihatKelompok.setVisible(true);
+               }
+               else{
+                   JOptionPane.showMessageDialog(j, "Belum Ada kelompok");
+                   kelasUtamaMahasiswa.addListener(this);
+               }
            }
        }
        
@@ -2164,34 +2196,10 @@ public class Controller implements ActionListener{
                mhsKerjakanTugasKelompok.dispose();
                mhsPilihTugasKelompok.setVisible(true);
            }
-           else if(source.equals(mhsKerjakanTugasKelompok.getBtnJawab())){ //mau jawab soal nya
-               view = new MhsJawabTugasKelompokView();
-               mhsJawabTugasKelompok = new MhsJawabTugasKelompokView();
-               mhsJawabTugasKelompok.addListener(this);
-               mhsKerjakanTugasKelompok.dispose();
-               mhsJawabTugasKelompok.setVisible(true);
-           }
+          
        }
        
        
-       
-       
-       else if (view instanceof MhsJawabTugasKelompokView){
-           if(source.equals(mhsJawabTugasKelompok.getBtnLihatSoal())){ //mau liat soalnya
-               view = new MhsKerjakanTugasKelompokView();
-               mhsKerjakanTugasKelompok = new MhsKerjakanTugasKelompokView();
-               mhsKerjakanTugasKelompok.addListener(this);
-               mhsJawabTugasKelompok.dispose();
-               mhsKerjakanTugasKelompok.setVisible(true);
-           }
-           else if (source.equals(mhsJawabTugasKelompok.getBtnSubmit())){ //submit jawabannya
-               view = new MhsKerjakanTugasKelompokView();
-               mhsKerjakanTugasKelompok = new MhsKerjakanTugasKelompokView();
-               mhsKerjakanTugasKelompok.addListener(this);
-               mhsJawabTugasKelompok.dispose();
-               mhsKerjakanTugasKelompok.setVisible(true);
-           }
-       }
        
        
        
