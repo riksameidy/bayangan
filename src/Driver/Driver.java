@@ -15,13 +15,14 @@ import Controller.Controller;
 public class Driver {
     public static void main(String[] args) {
         Apps apps = new Apps();
-        apps.createDosen(1);
+        
         apps.createMhs(1301142289);
         apps.getMhs(1301142289).setUsername("Riksa");
         
         apps.createMhs(1301140389);
         apps.getMhs(1301140389).setUsername("Chii ndut");
         
+        apps.createDosen(1);
         apps.getDosen(1).setUsername("r");
         apps.getDosen(1).setPassword("y");
         System.out.println(apps.getDosen("r").getUsername());

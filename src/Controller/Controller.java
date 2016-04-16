@@ -9,9 +9,9 @@ import Apps.Apps;
 import View.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javafx.scene.text.Text;
 import javax.swing.JOptionPane;
 import tubesbayangan.POJO.Kelompok;
+import tubesbayangan.POJO.Mahasiswa;
 
 /**
  *
@@ -1050,6 +1050,7 @@ public class Controller implements ActionListener{
                        String ketu;
                        
                        noKelompok = apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).getNoKelompok();
+                       currentNoKelompok = noKelompok;
                        pilKelompokEdit.setLabelNoKelompok(Integer.toString(noKelompok));
                        
                        try{
@@ -1086,6 +1087,7 @@ public class Controller implements ActionListener{
                        
                        
                        
+                       
                    
                    }
                    
@@ -1099,7 +1101,71 @@ public class Controller implements ActionListener{
        }
        else if(view instanceof PilihKelompokViewEdit){
            
+            idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+            idxKelompok = apps.getDosen(currentUsername).getKelas(idx).idxKelompok(currentNoKelompok);
+            
+           
            if(source.equals(pilKelompokEdit.getBtnAddMhs())){
+               
+               if(nimAdd==0){JOptionPane.showMessageDialog(j, "Silahkan inputkan NIM");}
+               else{
+                   
+               if(apps.getDosen(currentUsername).getKelas(idx).idxMhs(nimAdd)!=-1){
+               
+               Mahasiswa m = apps.getMhs(nimAdd);
+               apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).addAnggota(m);
+               
+               
+               JOptionPane.showMessageDialog(j, "Berhasil Ditambahkan");
+               view = new PilihKelompokViewEdit();
+               pilKelompokEdit.dispose();
+               pilKelompokEdit = new PilihKelompokViewEdit();
+               pilKelompokEdit.setVisible(true);
+               pilKelompokEdit.AddListener(this);
+               
+             
+                       
+                       //inisiasi label + list Anggota
+                       String ketu;
+                       
+                      
+                       pilKelompokEdit.setLabelNoKelompok(Integer.toString(currentNoKelompok));
+                       
+                       try{
+                           long s1 = apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).getKetua().getNim();
+                           ketu = Long.toString(s1);
+                       }
+                       catch(Exception ex){
+                           
+                           ketu = "None";
+                       }
+                       
+                       pilKelompokEdit.setLabelKetua(ketu);
+                       
+                       String[] listAnggota;
+                       
+                       long temps[] = null;
+                       temps = apps.getDosen(currentUsername).getKelas(idx).getKelompok(idxKelompok).getAllnimMhs();
+                       
+                       if(temps==null){
+                           pilKelompokEdit.setlAnggota(new String[]{"None"});
+                       }
+                       else{
+                           listAnggota = new String[temps.length];
+                           for (int i = 0; i < temps.length; i++) {
+                               listAnggota[i] = Long.toString(temps[i]);
+                           }
+                           
+                           pilKelompokEdit.setlAnggota(listAnggota);
+                           
+                       
+                       }
+                       nimAdd = 0;
+               }
+               else{
+                   JOptionPane.showMessageDialog(j, "Mahasiswa Tidak Ada di Kelas");
+               }
+               }    
                
            
            }
@@ -1107,11 +1173,52 @@ public class Controller implements ActionListener{
            
            }
            else if(source.equals(pilKelompokEdit.getBtnSetKetua())){
-           
+               
            
            }
            
            else if(source.equals(pilKelompokEdit.getTfNim())){
+              
+               try{
+                   long s = Long.parseLong(pilKelompokEdit.getTfNim().getText());
+                   if(apps.searchMhs(s)==-1){
+                       
+                       JOptionPane.showMessageDialog(j, "Mahasiswa Tidak Ditemukan");
+                       pilKelompokEdit.AddListener(this);
+                   }
+                   else{
+                       idx = apps.getDosen(currentUsername).idxKelas(currentKodeKelas);
+                       
+                       int[] tempkelompok = apps.getDosen(currentUsername).getKelas(idx).getAllKelompok();
+                       
+                       int foundMhs = -1;
+                       for (int i = 0; i < tempkelompok.length; i++) {
+                           int jmk = apps.getDosen(currentUsername).getKelas(idx).getKelompok(i).getMaxAnggota();
+                           for(int k=0;k<jmk;k++){
+                               if(apps.getDosen(currentUsername).getKelas(idx).getKelompok(i).getAnggota(k)!=null){
+                                    if(apps.getDosen(currentUsername).getKelas(idx).getKelompok(i).getAnggota(k).getNim()==s){
+                                        foundMhs=k;
+                                    }
+                               }
+                           
+                           }    
+                       }
+                       if(foundMhs==-1){
+                           nimAdd = s;
+                           
+                       }
+                       else{
+                           JOptionPane.showMessageDialog(j, "Mahasiswa Sudah Gabung di Kelompok Lain");
+                       }
+                   
+                   }
+                   
+               }
+               catch(NumberFormatException ex){
+                   
+                   JOptionPane.showMessageDialog(j, "NIM must be a number");
+                   pilKelompokEdit.AddListener(this);
+               }
            
            
            }
