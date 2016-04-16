@@ -7,6 +7,7 @@ package View;
 
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JList;
 
 /**
  *
@@ -98,6 +99,18 @@ public class MhsPilihKelasView extends javax.swing.JFrame implements View {
     public JButton getBtnPilih() {
         return btnPilih;
     }
+
+    public void setListKelasMahasiswa(String[] s) {
+        this.listKelasMahasiswa.setListData(s);
+    }
+
+    public JList<String> getListKelasMahasiswa() {
+        return listKelasMahasiswa;
+    }
+    
+    
+    
+    
     
     public void addListener(ActionListener l){
         btnBack.addActionListener(l);

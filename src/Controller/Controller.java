@@ -90,6 +90,7 @@ public class Controller implements ActionListener{
     private String currentKodeKelas;
     private String currentTugas;
     private int    currentNoKelompok;
+    private String myDosen;
     
     private long nimAdd;
     
@@ -1480,6 +1481,7 @@ public class Controller implements ActionListener{
                         else{
                        
                         apps.getDosen(currentUsername).getKelas(idx).addMahasiswa(apps.getMhs(nimAdd)); 
+                        apps.getMhs(nimAdd).tambahKelas();
                         JOptionPane.showMessageDialog(j, "Berhasil Ditambahkan");
                         
                         view = new PengelolaanMahasiswa();
@@ -1552,6 +1554,7 @@ public class Controller implements ActionListener{
                    int idxMhs = apps.getDosen(currentUsername).getKelas(idx).idxMhs(delNim);
                    apps.getDosen(currentUsername).getKelas(idx).deleteMhsInKelompok(delNim);
                    apps.getDosen(currentUsername).getKelas(idx).deleteMhs(idxMhs);
+                   apps.getMhs(delNim).kurangiKelas();
                    
                    
                    
@@ -1610,9 +1613,30 @@ public class Controller implements ActionListener{
            else if (source.equals(mahasiswaUtama.getBtnKelas())){ //mau milih kelas
                view = new MhsPilihKelasView();
                mhsPilihKelas = new MhsPilihKelasView();
-               mhsPilihKelas.addListener(this);
                mahasiswaUtama.dispose();
+               
+               Mahasiswa m = apps.getMhs(currentUsername);
+               
+               String[] l;
+               l = apps.searchMhsInKelas(m);
+               if(l==null){
+                   mhsPilihKelas.setListKelasMahasiswa(new String[]{"Tidak Ada Kelas"});
+               }
+               else{
+                   mhsPilihKelas.setListKelasMahasiswa(l);
+                   
+               }
+               
+               
+               
+               
                mhsPilihKelas.setVisible(true);
+               mhsPilihKelas.addListener(this);
+               
+               
+               
+               
+               
             }
            
            else if (source.equals(mahasiswaUtama.getBtnLogout())){ //mau balik lagi ke login
@@ -1713,11 +1737,39 @@ public class Controller implements ActionListener{
        
        else if(view instanceof MhsPilihKelasView){ //mau pilih kelas mahasiswa
            if (source.equals(mhsPilihKelas.getBtnPilih())){ //masuk ke kelas utama mahasiswa
-               view = new MhsKelasUtamaMahasiswa();
-               kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
-               kelasUtamaMahasiswa.addListener(this);
-               mhsPilihKelas.dispose();
-               kelasUtamaMahasiswa.setVisible(true);
+            String s = mhsPilihKelas.getListKelasMahasiswa().getSelectedValue();
+               
+               if(s==null){
+                   JOptionPane.showMessageDialog(j, "Silahkan Pilih Kelas");
+                   mhsPilihKelas.addListener(this);
+               }
+               else{
+                   if(s.equals("Tidak Ada Kelas")){
+                   JOptionPane.showMessageDialog(j, "Tidak Ada Kelas yang Dipilih");
+                   mhsPilihKelas.addListener(this);
+                       
+                   }
+                   else{
+                    
+                    
+                    
+                    view = new MhsKelasUtamaMahasiswa();
+                    kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
+                    
+                    currentKodeKelas = s;
+                    myDosen = apps.getDosenbyKelas(currentKodeKelas).getUsername();
+                    
+    
+                    mhsPilihKelas.dispose();
+                    kelasUtamaMahasiswa.setVisible(true);
+                    kelasUtamaMahasiswa.addListener(this);
+                   
+                   }
+               
+               }
+               
+               
+               
            }
            else if (source.equals(mhsPilihKelas.getBtnBack())){ //gajadi pilih kelas, balik ke menu utama mahasiswa
                view = new MahasiswaUtamaView();
@@ -1732,18 +1784,36 @@ public class Controller implements ActionListener{
        
        else if(view instanceof MhsKelasUtamaMahasiswa){ //di menu kelas nya mahasiswa
            if (source.equals(kelasUtamaMahasiswa.getBtnBack())){ //balik ke menu pilih kelas
+               
                view = new MhsPilihKelasView();
                mhsPilihKelas = new MhsPilihKelasView();
-               mhsPilihKelas.addListener(this);
                kelasUtamaMahasiswa.dispose();
+               
+               Mahasiswa m = apps.getMhs(currentUsername);
+               
+               String[] l;
+               l = apps.searchMhsInKelas(m);
+               if(l==null){
+                   mhsPilihKelas.setListKelasMahasiswa(new String[]{"Tidak Ada Kelas"});
+               }
+               else{
+                   mhsPilihKelas.setListKelasMahasiswa(l);
+                   
+               }
+               
                mhsPilihKelas.setVisible(true);
+               mhsPilihKelas.addListener(this);
            }
            else if (source.equals(kelasUtamaMahasiswa.getBtnPilihTugas())){ //mau liat list tugas dan pilih tugas
+               
+               
                view =  new MhsPilihTugasIndividuView();
                mhsPilihTugasIndividu =  new MhsPilihTugasIndividuView();
                mhsPilihTugasIndividu.addListener(this);
                kelasUtamaMahasiswa.dispose();
                mhsPilihTugasIndividu.setVisible(true);
+               
+               
            }
            else if (source.equals(kelasUtamaMahasiswa.getBtnGabungKelompok())){ //mau liat list kelompok dan gabung
                view = new MhsGabungKelompokView();

@@ -24,6 +24,44 @@ public class Apps {
     private List<Kelompok> daftarKelompok = new ArrayList<>();
     private List<MataKuliah> daftarMK = new ArrayList<>();
     
+    public String[] searchMhsInKelas(Mahasiswa m){
+        
+        if(m.getJumlahKelas()==0){
+            return null;
+        }
+        else{
+        String[] temp = new String[m.getJumlahKelas()];
+        int idx = 0;
+        for (Dosen d : daftarDosen) {
+            for(int i=0;i<d.getJumlahKelas();i++){
+                for(int j=0;j< d.getKelas(i).getJumlahMhs();j++){
+                    if(d.getKelas(i).getMahasiswa(j).getNim()==m.getNim()){
+                        temp[idx] = d.getKelas(i).getNama();
+                        idx++;
+                    }
+                }
+            }
+        }
+            return temp;
+        }
+    
+    }
+    
+    public Dosen getDosenbyKelas(String kodeKelas){
+        Dosen dos = null;
+        
+        for (Dosen d : daftarDosen) {
+            for (int i = 0; i < d.getJumlahKelas(); i++) {
+                if(d.getKelas(i).getNama().equals(kodeKelas)){
+                    dos = d;
+                }
+                
+            }
+        }
+        return dos;
+    
+    }
+    
     public void createDosen(long nip){
         Dosen d = new Dosen(nip);
         daftarDosen.add(d);

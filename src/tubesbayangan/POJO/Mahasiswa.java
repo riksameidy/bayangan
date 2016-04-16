@@ -16,6 +16,7 @@ public class Mahasiswa extends Orang {
     private int maxTugas; //default max tugas = 5
     private int jumlahTugas;
     private Tugas[] tugas;
+    private int jumlahKelas;
     
     @Override
     public String toStringJenis(){
@@ -26,6 +27,7 @@ public class Mahasiswa extends Orang {
         this.maxTugas = 5;
         this.nim = nim;
         tugas = new Tugas[maxTugas];
+        jumlahKelas = 0;
     }
     
     public long getNim() {
@@ -61,6 +63,18 @@ public class Mahasiswa extends Orang {
     }
     public void submitTugas(int t){
         tugas[t].setStatusDikerjakan(true);
+    }
+    
+    public void tambahKelas(){
+        jumlahKelas++;
+    }
+    
+    public void kurangiKelas(){
+        jumlahKelas--;
+    }
+    
+    public int getJumlahKelas(){
+        return jumlahKelas;
     }
     
    
