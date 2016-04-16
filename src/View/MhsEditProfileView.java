@@ -7,6 +7,7 @@ package View;
 
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JTextField;
 
 /**
  *
@@ -131,10 +132,27 @@ public class MhsEditProfileView extends javax.swing.JFrame implements View {
     public JButton getBtnSubmit() {
         return btnSubmit;
     }
+
+    public JTextField gettFPassEdit() {
+        return tFPassEdit;
+    }
+
+    public JTextField getTfEmailEdit() {
+        return tfEmailEdit;
+    }
+
+    public JTextField getTfNamaEdit() {
+        return tfNamaEdit;
+    }
+    
+    
     
     public void addListener (ActionListener l){
         btnBack.addActionListener(l);
         btnSubmit.addActionListener(l);
+        tFPassEdit.addActionListener(l);
+        tfEmailEdit.addActionListener(l);
+        tfNamaEdit.addActionListener(l);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

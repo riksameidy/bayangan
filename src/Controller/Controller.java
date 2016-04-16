@@ -154,6 +154,12 @@ public class Controller implements ActionListener{
                         }
                         else{
                             if(apps.getMhs(username).getPassword().equals(password)){
+                                currentUsername = username;
+                                
+                                nama = "";
+                                password="";
+                                email = "";
+                                
                                 login.setNotification("Login Berhasil sebagai Mahasiswa");
                                 view = new MahasiswaUtamaView();
                                 mahasiswaUtama = new MahasiswaUtamaView();
@@ -1574,13 +1580,33 @@ public class Controller implements ActionListener{
        
       //bikinan chii
        else if(view instanceof MahasiswaUtamaView){ //menu utamanya mahasiswa abis login
+           
            if (source.equals(mahasiswaUtama.getBtnProfile())){ //mau liat profil mahasiswa
+               
+               
                view = new MhsProfileView();
                mhsProfile = new MhsProfileView();
-               mhsProfile.addListener(this);
                mahasiswaUtama.dispose();
+               
+               Mahasiswa m = apps.getMhs(currentUsername);
+               
+               if(m.getNama()!=null){
+               mhsProfile.setLabelEmail(m.getNama());
+               }
+               if(Long.toString(m.getNim())!=null){
+               mhsProfile.setLabelNIM(Long.toString(m.getNim()));
+               }
+               if(m.getNama()!=null){
+               mhsProfile.setLabelNama(m.getNama());
+               }
+               
                mhsProfile.setVisible(true);
+               mhsProfile.addListener(this);
+               
+               
+               
            }
+           
            else if (source.equals(mahasiswaUtama.getBtnKelas())){ //mau milih kelas
                view = new MhsPilihKelasView();
                mhsPilihKelas = new MhsPilihKelasView();
@@ -1588,6 +1614,7 @@ public class Controller implements ActionListener{
                mahasiswaUtama.dispose();
                mhsPilihKelas.setVisible(true);
             }
+           
            else if (source.equals(mahasiswaUtama.getBtnLogout())){ //mau balik lagi ke login
                view =  new LoginView();
                login = new LoginView();
@@ -1599,8 +1626,11 @@ public class Controller implements ActionListener{
            }
        }
        
+       
+       
        else if(view instanceof MhsProfileView){ //tampil info profil mahasiswa
            if (source.equals(mhsProfile.getBtnEditProfil())){ //mau edit profil mahasiswa
+               
                view = new MhsEditProfileView();
                mhsEditProfile = new MhsEditProfileView();
                mhsEditProfile.addListener(this);
@@ -1618,14 +1648,45 @@ public class Controller implements ActionListener{
            
        }
        
+       
+       
        else if(view instanceof MhsEditProfileView){ //mau edit si profilnya
            if (source.equals(mhsEditProfile.getBtnSubmit())){ //mau simpan data profil yang abis diedit
+               
+               if(nama.equals("")||password.equals("")||email.equals("")){
+                   JOptionPane.showMessageDialog(j, "Silahkan Isi Field");
+                   mhsEditProfile.addListener(this);
+               }
+               else{
+               
+               
+               apps.getMhs(currentUsername).setPassword(password);
+               apps.getMhs(currentUsername).setNama(nama);
+               apps.getMhs(currentUsername).setEmail(email);
+               JOptionPane.showMessageDialog(j, "Berhasil Di edit");
+               
                view = new MhsProfileView();
                mhsProfile = new MhsProfileView();
-               mhsProfile.addListener(this);
                mhsEditProfile.dispose();
+               Mahasiswa m = apps.getMhs(currentUsername);
+               
+               if(m.getNama()!=null){
+               mhsProfile.setLabelEmail(m.getNama());
+               }
+               if(Long.toString(m.getNim())!=null){
+               mhsProfile.setLabelNIM(Long.toString(m.getNim()));
+               }
+               if(m.getNama()!=null){
+               mhsProfile.setLabelNama(m.getNama());
+               }
+               
                mhsProfile.setVisible(true);
+               mhsProfile.addListener(this);
+               
+               }
            }
+               
+           
            
            else if (source.equals(mhsEditProfile.getBtnBack())){ //balik lagi ke profil, gajadi edit profilnya
                view = new MhsProfileView();
@@ -1634,7 +1695,21 @@ public class Controller implements ActionListener{
                mhsEditProfile.dispose();
                mhsProfile.setVisible(true);
            }
+           
+           else if(source.equals(mhsEditProfile.getTfNamaEdit())){
+               nama = mhsEditProfile.getTfNamaEdit().getText();
+           }
+           
+           else if(source.equals(mhsEditProfile.getTfEmailEdit())){
+               email = mhsEditProfile.getTfEmailEdit().getText();
+           }
+           else if(source.equals(mhsEditProfile.gettFPassEdit())){
+               password = mhsEditProfile.gettFPassEdit().getText();
+           
+           }
        }
+       
+       
        
        else if(view instanceof MhsPilihKelasView){ //mau pilih kelas mahasiswa
            if (source.equals(mhsPilihKelas.getBtnPilih())){ //masuk ke kelas utama mahasiswa
@@ -1652,6 +1727,8 @@ public class Controller implements ActionListener{
                mahasiswaUtama.setVisible(true);
            }
        }
+       
+       
        
        else if(view instanceof MhsKelasUtamaMahasiswa){ //di menu kelas nya mahasiswa
            if (source.equals(kelasUtamaMahasiswa.getBtnBack())){ //balik ke menu pilih kelas
@@ -1684,6 +1761,8 @@ public class Controller implements ActionListener{
            }
        }
        
+       
+       
        else if (view instanceof MhsPilihTugasIndividuView){
            if (source.equals(mhsPilihTugasIndividu.getBtnBack())){ //mau balik lagi ke menu kelas mahasiswa
                view = new MhsKelasUtamaMahasiswa();
@@ -1700,6 +1779,9 @@ public class Controller implements ActionListener{
                mhsKerjakanTugasIndividu.setVisible(true);
            }
        }
+       
+       
+       
        
        else if (view instanceof MhsKerjakanTugasIndividuView){
            if (source.equals(mhsKerjakanTugasIndividu.getBtnBack())){ //balik lagi ke pilih tugas
@@ -1718,6 +1800,9 @@ public class Controller implements ActionListener{
            }
        }
        
+       
+       
+       
        else if (view instanceof MhsJawabTugasIndividuView){
            if(source.equals(mhsJawabTugasIndividu.getBtnLihatSoal())){ //mau liat soal nya lagi
                view = new MhsKerjakanTugasIndividuView();
@@ -1734,6 +1819,8 @@ public class Controller implements ActionListener{
                mhsKerjakanTugasIndividu.setVisible(true);
            }
        }
+       
+       
        
        else if (view instanceof MhsGabungKelompokView){
            if (source.equals(mhsGabungKelompok.getBtnCancel())){ //gajadi gabung kelompoknya
@@ -1752,6 +1839,8 @@ public class Controller implements ActionListener{
            }
                
        }
+       
+       
        
        else if (view instanceof MhsLihatKelompokView){
            if(source.equals(mhsLihatKelompok.getBtnBack())){ //mau balik lagi ke 
@@ -1784,6 +1873,9 @@ public class Controller implements ActionListener{
            }
        }
        
+       
+       
+       
        else if (view instanceof MhsPilihTugasKelompokView){
            if (source.equals(mhsPilihTugasKelompok.getBtnBack())){ //balik lagi ke liat list tugasnya
                view = new MhsLihatKelompokView();
@@ -1802,6 +1894,8 @@ public class Controller implements ActionListener{
            
        }
        
+       
+       
        else if (view instanceof MhsKerjakanTugasKelompokView){
            if(source.equals(mhsKerjakanTugasKelompok.getBtnBack())){ //balik lagi ke list pilih tugas
                view = new MhsPilihTugasKelompokView();
@@ -1819,6 +1913,9 @@ public class Controller implements ActionListener{
            }
        }
        
+       
+       
+       
        else if (view instanceof MhsJawabTugasKelompokView){
            if(source.equals(mhsJawabTugasKelompok.getBtnLihatSoal())){ //mau liat soalnya
                view = new MhsKerjakanTugasKelompokView();
@@ -1835,6 +1932,10 @@ public class Controller implements ActionListener{
                mhsKerjakanTugasKelompok.setVisible(true);
            }
        }
+       
+       
+       
+       
        else if (view instanceof MhsLihatInfoKelompokView){
             if(source.equals(mhsLihatInfoKelompok.getBtnBack())){ //balik lagi ke lihat kelompok
                 view = new MhsLihatKelompokView();
@@ -1844,6 +1945,9 @@ public class Controller implements ActionListener{
                 mhsLihatKelompok.setVisible(true);
         }
     }
+       
+       
+       
        else if (view instanceof MhsPilihKetuaKelompokView){
            if(source.equals(mhsPilihKetuaKelompok.getBtnCancel())){ //balik lagi ke lihat kelompok
                view = new MhsLihatKelompokView();

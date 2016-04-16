@@ -7,6 +7,7 @@ package View;
 
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
@@ -31,8 +32,6 @@ public class MhsProfileView extends javax.swing.JFrame implements View {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        labelUsername = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         LabelNama = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -46,21 +45,11 @@ public class MhsProfileView extends javax.swing.JFrame implements View {
 
         jLabel1.setText("Profil Menu Mahasiswa");
 
-        jLabel2.setText("Username :");
-
-        labelUsername.setText("Username disini");
-
         jLabel4.setText("Nama :");
-
-        LabelNama.setText("Nama disini");
 
         jLabel6.setText("NIM : ");
 
-        LabelNIM.setText("NIM disini");
-
         jLabel8.setText("Email :");
-
-        LabelEmail.setText("Email disini");
 
         btnBack.setText("Back");
 
@@ -73,16 +62,17 @@ public class MhsProfileView extends javax.swing.JFrame implements View {
             .addGroup(layout.createSequentialGroup()
                 .addGap(67, 67, 67)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel8))
-                .addGap(24, 24, 24)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel8)))
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(LabelEmail)
                     .addComponent(LabelNIM)
                     .addComponent(LabelNama)
-                    .addComponent(labelUsername)
                     .addComponent(jLabel1))
                 .addContainerGap(146, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -97,15 +87,11 @@ public class MhsProfileView extends javax.swing.JFrame implements View {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(42, 42, 42)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(labelUsername))
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(LabelNama))
-                .addGap(31, 31, 31)
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(LabelNIM))
@@ -113,7 +99,7 @@ public class MhsProfileView extends javax.swing.JFrame implements View {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(LabelEmail))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnEditProfil))
@@ -148,10 +134,23 @@ public class MhsProfileView extends javax.swing.JFrame implements View {
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnEditProfil;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel labelUsername;
     // End of variables declaration//GEN-END:variables
+
+    public void setLabelEmail(String s) {
+        this.LabelEmail.setText(s);
+    }
+
+    public void setLabelNIM(String s) {
+        this.LabelNIM.setText(s);
+    }
+
+    public void setLabelNama(String s) {
+        this.LabelNama.setText(s);
+    }
+
+
+
 }
