@@ -7,6 +7,7 @@ package View;
 
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JList;
 
 /**
  *
@@ -104,6 +105,16 @@ public class MhsGabungKelompokView extends javax.swing.JFrame implements View {
         btnGabung.addActionListener(l);
         
     }
+
+    public JList<String> getListKelompok() {
+        return listKelompok;
+    }
+
+    public void setListKelompok(String[] s) {
+        this.listKelompok.setListData(s);
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;

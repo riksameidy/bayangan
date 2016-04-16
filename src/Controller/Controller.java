@@ -1849,9 +1849,22 @@ public class Controller implements ActionListener{
                
                  view = new MhsGabungKelompokView();
                  mhsGabungKelompok = new MhsGabungKelompokView();
-                 mhsGabungKelompok.addListener(this);
                  kelasUtamaMahasiswa.dispose();
+                 
+                 int[] temp ;
+                 String[] temps;
+                 idx = apps.getDosen(myDosen).idxKelas(currentKodeKelas);
+                 temp = apps.getDosen(myDosen).getKelas(idx).getAllKelompok();
+                 int jumKelompok = apps.getDosen(myDosen).getKelas(idx).getJumlahKelompok();
+                 temps = new String[jumKelompok];
+                 for(int i=0;i<jumKelompok;i++){
+                     temps[i] = Integer.toString(temp[i]);
+                 }
+                 
+                 mhsGabungKelompok.setListKelompok(temps);
+                 mhsGabungKelompok.addListener(this);
                  mhsGabungKelompok.setVisible(true);
+                 
                }
                
            }
@@ -2109,11 +2122,6 @@ public class Controller implements ActionListener{
        }
        
        
-       
-       
-       
-       
-       
        else if (view instanceof MhsGabungKelompokView){
            if (source.equals(mhsGabungKelompok.getBtnCancel())){ //gajadi gabung kelompoknya
                view = new MhsKelasUtamaMahasiswa();
@@ -2123,11 +2131,34 @@ public class Controller implements ActionListener{
                kelasUtamaMahasiswa.setVisible(true);
            }
            else if (source.equals(mhsGabungKelompok.getBtnGabung())){ //mau gabung ke kelompok yang dipilih
-               view = new MhsKelasUtamaMahasiswa();
-               kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
-               kelasUtamaMahasiswa.addListener(this);
-               mhsGabungKelompok.dispose();
-               kelasUtamaMahasiswa.setVisible(true);
+               
+               String s = mhsGabungKelompok.getListKelompok().getSelectedValue();
+               if(s==null){
+                   JOptionPane.showMessageDialog(j, "Tidak Ada Yang dipilih");
+                   mhsGabungKelompok.addListener(this);
+               }
+               else{
+               idx = apps.getDosen(myDosen).idxKelas(currentKodeKelas);
+               idxKelompok = apps.getDosen(myDosen).getKelas(idx).idxKelompok(Integer.parseInt(s));
+               
+               if(apps.getDosen(myDosen).getKelas(idx).getKelompok(idxKelompok).getJumlahAnggota()
+                       ==apps.getDosen(myDosen).getKelas(idx).getKelompok(idxKelompok).getMaxAnggota()){
+               
+                   JOptionPane.showMessageDialog(j, "Kelompok Sudah Penuh");
+                   mhsGabungKelompok.addListener(this);
+               }
+               else{
+                    apps.getDosen(myDosen).getKelas(idx).getKelompok(idxKelompok).addAnggota(apps.getMhs(currentUsername));
+                    JOptionPane.showMessageDialog(j, "Berhasil Bergabung");
+                    view = new MhsKelasUtamaMahasiswa();
+                    kelasUtamaMahasiswa = new MhsKelasUtamaMahasiswa();
+                    kelasUtamaMahasiswa.addListener(this);
+                    mhsGabungKelompok.dispose();
+                    kelasUtamaMahasiswa.setVisible(true);
+               
+                    }
+               }
+               
            }
                
        }
